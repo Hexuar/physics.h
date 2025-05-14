@@ -9,20 +9,20 @@
 std::string si_strings[7] = {"K","m","A","s","mol","kg","cd"};
 
 std::map<std::string, std::string> si_special_names{
-    { " s⁻¹", " Hz" },
-    { " ms⁻²kg", " N" },
-    { " m⁻¹s⁻²kg", " Pa" },
-    { " m²s⁻²kg", " J" },
-    { " m²s⁻³kg", " W" },
-    { " As", " C" },
-    { " m²A⁻¹s⁻³kg", " V" },
-    { " m⁻²A²s⁴kg⁻¹", " F" },
-    { " m²A⁻²s⁻³kg", " Ω" },
-    { " m⁻²A²s³kg⁻¹", " S" },
-    { " m²A⁻¹s⁻²kg", " Wb" },
-    { " A⁻¹s⁻²kg", " T" },
-    { " m²A⁻²s⁻²kg", " H" },
-    { " m⁻²cd", " lx" },
+    { "s⁻¹", "Hz" },
+    { "ms⁻²kg", "N" },
+    { "m⁻¹s⁻²kg", "Pa" },
+    { "m²s⁻²kg", "J" },
+    { "m²s⁻³kg", "W" },
+    { "As", "C" },
+    { "m²A⁻¹s⁻³kg", "V" },
+    { "m⁻²A²s⁴kg⁻¹", "F" },
+    { "m²A⁻²s⁻³kg", "Ω" },
+    { "m⁻²A²s³kg⁻¹", "S" },
+    { "m²A⁻¹s⁻²kg", "Wb" },
+    { "A⁻¹s⁻²kg", "T" },
+    { "m²A⁻²s⁻²kg", "H" },
+    { "m⁻²cd", "lx" },
 };
 
 unit::unit(const std::vector<int8_t>& si_units) {
@@ -52,7 +52,7 @@ unit::unit(const char* si_unit) {
 }
 
 std::string unit::to_string() {
-    std::string output = " ";
+    std::string output = "";
 
     for(int i = 0; i < 7; i++) {
         int8_t u = si[i];
@@ -96,7 +96,7 @@ val::val(const double& value, const class unit& unit) {
 }
 
 std::string val::to_string() {
-    return std::to_string(value) + u.to_string();
+    return std::to_string(value) + " " + u.to_string();
 }
 
 val val::operator+(val& x) {

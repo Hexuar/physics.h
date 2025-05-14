@@ -1,7 +1,7 @@
 #include "physics.h"
 #include "print.h"
 
-void test() {
+int main() {
     val s = 10 * M;
     val t = 4 * S;
     val m = 20 * KG;
@@ -17,8 +17,4 @@ void test() {
     print("f: " + f);
     print("w: " + w);
     print("p: " + p);
-}
-
-int main() {
-    test();
 }
