@@ -1,6 +1,6 @@
 #include "superscript.h"
 
-std::map<char, std::string> supertable{
+std::map<char, std::string> super::supertable{
     {'0', "\u2070"},
     {'1', "\u00b9"},
     {'2', "\u00b2"},
@@ -15,10 +15,10 @@ std::map<char, std::string> supertable{
     {'-', "\u207B"}
 };
 
-std::string super(char c) {
+std::string super::super(char c) {
     return supertable[c];
 }
-std::string super(int n) {
+std::string super::super(int n) {
     std::string out;
     if(n < 0) {
         out += "\u207B";

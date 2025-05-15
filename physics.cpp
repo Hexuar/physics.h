@@ -67,7 +67,7 @@ std::string unit::to_string() const {
         if(u != 0) {
             output += si_strings[i];
             if(u != 1) {
-                output += super(u);
+                output += super::super(u);
             }
         }
     }
@@ -101,12 +101,12 @@ unit unit::operator/(const unit& x) const {
 // VAL //
 
 val::val(const double& value, const class unit& unit) {
-    this->value = value;
+    this->v = value;
     this->u = unit;
 }
 
 std::string val::to_string() const {
-    return std::to_string(value) + " " + u.to_string();
+    return std::to_string(v) + " " + u.to_string();
 }
 val::operator std::string() const {
     return this->to_string();
@@ -114,17 +114,17 @@ val::operator std::string() const {
 
 val val::operator+(val& x) {
     if(u.to_string() != x.u.to_string()) throw std::invalid_argument("Unit Error");
-    return val(value + x.value, u);
+    return val(v + x.v, u);
 }
 val val::operator-(val& x) {
     if(u.to_string() != x.u.to_string()) throw std::invalid_argument("Unit Error");
-    return val(value - x.value, u);
+    return val(v - x.v, u);
 }
 val val::operator*(val& x) {
-    return val(value * x.value, u * x.u);
+    return val(v * x.v, u * x.u);
 }
 val val::operator/(val& x) {
-    return val(value / x.value, u / x.u);
+    return val(v / x.v, u / x.u);
 }
 
 val operator*(const float& x, const unit& y){
@@ -135,8 +135,8 @@ std::string operator+(const std::string& x, val& y){
 }
 
 val operator*(const val& x, const unit& y){
-    return val(x.value, x.u * y);
+    return val(x.v, x.u * y);
 }
 val operator/(const val& x, const unit& y){
-    return val(x.value, x.u / y);
+    return val(x.v, x.u / y);
 }

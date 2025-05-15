@@ -12,11 +12,11 @@ int main() {
     val w = f * s;
     val p = w / t;
 
-    print("v: " + v);
-    print("a: " + a);
-    print("f: " + f);
-    print("w: " + w);
-    print("p: " + p);
+    print("v:", v);
+    print("a:", a);
+    print("f:", f);
+    print("w:", w);
+    print("p:", p);
 
     val v_2 = 14 * M / S;
     print(v_2);
