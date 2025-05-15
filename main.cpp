@@ -17,4 +17,15 @@ int main() {
     print("f: " + f);
     print("w: " + w);
     print("p: " + p);
+
+    val v_2 = 14 * M / S;
+    print(v_2);
+
+    val f1 = 7 * N;
+    val f2 = 12 * N;
+    val f3 = f1+f2;
+
+    print(f1);
+    print(f2);
+    print(f3);
 }
