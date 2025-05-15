@@ -14,17 +14,17 @@
 // Holds an int8_t array with the exponents of each SI unit.
 class unit {
 public:
-    unit(const std::vector<int8_t>& si_units = {0,0,0,0,0,0,0});
-    unit(const int& si_unit);
-    unit(const std::string& si_unit);
+    unit(const std::vector<int8_t> si_units = {0,0,0,0,0,0,0});
+    unit(const int si_unit);
+    unit(const std::string si_unit);
     unit(const char* si_unit);
 
     // String conversion
     std::string to_string() const;
 
     // Operators
-    unit operator*(const unit& x) const;
-    unit operator/(const unit& x) const;
+    unit operator*(const unit x) const;
+    unit operator/(const unit x) const;
 
 private:
     int8_t si[7];
@@ -40,26 +40,26 @@ public:
     long double v;
     unit u;
 
-    val(const double& v, const unit& u = unit());
+    val(const double v, const unit u = unit());
 
     // String conversion
     std::string to_string() const;
     operator std::string() const;
 
     // Operators
-    val operator+(val& x);
-    val operator-(val& x);
-    val operator*(val& x);
-    val operator/(val& x);
+    val operator+(val x);
+    val operator-(val x);
+    val operator*(val x);
+    val operator/(val x);
 };
 
 // Converisons
-val operator*(const float& x, const unit& y);
-std::string operator+(const std::string& x, val& y);
+val operator*(const float x, const unit y);
+std::string operator+(const std::string x, val y);
 
 // Value - Unit operations
-val operator*(const val& x, const unit& y);
-val operator/(const val& x, const unit& y);
+val operator*(const val x, const unit y);
+val operator/(const val x, const unit y);
 
 
 

@@ -2,30 +2,15 @@
 #include "print.h"
 
 int main() {
-    val s = 10 * M;
-    val t = 4 * S;
-    val m = 20 * KG;
+    val u = 12 * V;
+    val r_1 = 10'000 * OHM;
+    val r_2 = 5'000 * OHM;
 
-    val v = s / t;
-    val a = v / t;
-    val f = a * m;
-    val w = f * s;
-    val p = w / t;
+    val r_tot = (r_1 * r_2) / (r_1 + r_2);
+    val i = u / r_tot;
 
-    print("v:", v);
-    print("a:", a);
-    print("f:", f);
-    print("w:", w);
-    print("p:", p);
+    val i_1 = i * r_1 / (r_1 + r_2);
+    val i_2 = i * r_2 / (r_1 + r_2);
 
-    val v_2 = 14 * M / S;
-    print(v_2);
-
-    val f1 = 7 * N;
-    val f2 = 12 * N;
-    val f3 = f1+f2;
-
-    print(f1);
-    print(f2);
-    print(f3);
+    print(i, i_1, i_2);
 }

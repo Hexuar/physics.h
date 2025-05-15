@@ -25,16 +25,16 @@ std::map<std::vector<int8_t>, std::string> si_special_names{
     { std::vector<int8_t>{0,-2,0,0,0,0,1}, "lx" },
 };
 
-unit::unit(const std::vector<int8_t>& si_units) {
+unit::unit(const std::vector<int8_t> si_units) {
     int size = si_units.size();
     for(int i = 0; i < std::min(7, size); i++) {
         si[i] = si_units[i];
     }
 }
-unit::unit(const int& si_unit) {
+unit::unit(const int si_unit) {
     si[si_unit] = 1;
 }
-unit::unit(const std::string& si_unit) {
+unit::unit(const std::string si_unit) {
     for(int i = 0; i < 7; i++) {
         si[i] = 0;
         if(si_unit == si_strings[i]) {
@@ -75,7 +75,7 @@ std::string unit::to_string() const {
     return output;
 }
 
-unit unit::operator*(const unit& x) const {
+unit unit::operator*(const unit x) const {
     std::vector<int8_t> si_units;
 
     for(int i = 0; i < 7; i++) {
@@ -84,7 +84,7 @@ unit unit::operator*(const unit& x) const {
 
     return unit(si_units);
 }
-unit unit::operator/(const unit& x) const {
+unit unit::operator/(const unit x) const {
     std::vector<int8_t> si_units;
 
     for(int i = 0; i < 7; i++) {
@@ -100,7 +100,7 @@ unit unit::operator/(const unit& x) const {
 
 // VAL //
 
-val::val(const double& value, const class unit& unit) {
+val::val(const double value, const class unit unit) {
     this->v = value;
     this->u = unit;
 }
@@ -112,31 +112,31 @@ val::operator std::string() const {
     return this->to_string();
 }
 
-val val::operator+(val& x) {
+val val::operator+(val x) {
     if(u.to_string() != x.u.to_string()) throw std::invalid_argument("Unit Error");
     return val(v + x.v, u);
 }
-val val::operator-(val& x) {
+val val::operator-(val x) {
     if(u.to_string() != x.u.to_string()) throw std::invalid_argument("Unit Error");
     return val(v - x.v, u);
 }
-val val::operator*(val& x) {
+val val::operator*(val x) {
     return val(v * x.v, u * x.u);
 }
-val val::operator/(val& x) {
+val val::operator/(val x) {
     return val(v / x.v, u / x.u);
 }
 
-val operator*(const float& x, const unit& y){
+val operator*(const float x, const unit y){
     return val(x, y);
 }
-std::string operator+(const std::string& x, val& y){
+std::string operator+(const std::string x, val y){
     return x + y.to_string();
 }
 
-val operator*(const val& x, const unit& y){
+val operator*(const val x, const unit y){
     return val(x.v, x.u * y);
 }
-val operator/(const val& x, const unit& y){
+val operator/(const val x, const unit y){
     return val(x.v, x.u / y);
 }
