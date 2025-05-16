@@ -28,7 +28,7 @@ public:
 
     bool operator<(const unit x) const;
 
-private:
+//private:
     int8_t si[7];
 };
 
@@ -87,7 +87,7 @@ const unit MOL = unit(6);
 
 
 // Derived units
-const unit HZ = (unit)1 / S;
+const unit HZ = unit() / S;
 const unit N = KG * M / (S^2);
 const unit J = N * M;
 const unit W = J / S;
