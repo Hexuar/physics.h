@@ -112,18 +112,18 @@ val::operator std::string() const {
     return this->to_string();
 }
 
-val val::operator+(val x) {
+val val::operator+(val x) const {
     if(u.to_string() != x.u.to_string()) throw std::invalid_argument("Unit Error");
     return val(v + x.v, u);
 }
-val val::operator-(val x) {
+val val::operator-(val x) const {
     if(u.to_string() != x.u.to_string()) throw std::invalid_argument("Unit Error");
     return val(v - x.v, u);
 }
-val val::operator*(val x) {
+val val::operator*(val x) const {
     return val(v * x.v, u * x.u);
 }
-val val::operator/(val x) {
+val val::operator/(val x) const {
     return val(v / x.v, u / x.u);
 }
 
