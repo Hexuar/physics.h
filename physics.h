@@ -11,11 +11,11 @@
 // Represents a physical dimension.
 // Holds an int8_t array with the exponents of each SI unit.
 class unit {
+private:
+    int8_t si[7];
+
 public:
     unit(const std::vector<int8_t> si_units = {0,0,0,0,0,0,0});
-    unit(const int si_unit);
-    unit(const std::string si_unit);
-    unit(const char* si_unit);
 
     // String conversion
     std::string to_string() const;
@@ -27,9 +27,6 @@ public:
     unit operator^(int x) const;
 
     bool operator<(const unit x) const;
-
-//private:
-    int8_t si[7];
 };
 
 std::ostream& operator<<(std::ostream& os, const unit& v);
@@ -46,30 +43,38 @@ public:
 
     val(const double v, const unit u = unit());
 
-    // String conversion
+    // Conversions
     std::string to_string() const;
     operator std::string() const;
-
-    // Operators
-    val operator+(val x) const;
-    val operator-(val x) const;
-    val operator*(val x) const;
-    val operator/(val x) const;
-    val operator^(int x) const;
-
-    bool operator<(val x) const;
-    bool operator>(val x) const;
+    explicit operator int() const;
+    explicit operator float() const;
+    explicit operator double() const;
+    explicit operator long double() const;
 };
 
-// Converisons
-val operator*(const float x, const unit y);
-std::string operator+(const std::string x, val y);
+// Operators
+val operator+(val x, val y);
 
-// Value - Unit operations
-val operator*(const val x, const unit y);
-val operator/(const val x, const unit y);
+val operator-(val x, val y);
 
-// Stream
+val operator*(val x, val y);
+val operator*(val x, long double y);
+val operator*(long double x, val y);
+val operator*(val x, unit y);
+
+val operator/(val x, val y);
+val operator/(val x, long double y);
+val operator/(long double x, val y);
+val operator/(val x, unit y);
+
+val operator^(val x, int y);
+
+bool operator<(val x, val y);
+bool operator>(val x, val y);
+
+// Converison operators
+val operator*(float x, unit y);
+std::string operator+(std::string x, val y);
 std::ostream& operator<<(std::ostream& os, const val& v);
 
 
@@ -77,14 +82,13 @@ std::ostream& operator<<(std::ostream& os, const val& v);
 
 
 // SI Units
-const unit M = unit(0);
-const unit KG = unit(1);
-const unit S = unit(2);
-const unit A = unit(3);
-const unit K = unit(4);
-const unit CD = unit(5);
-const unit MOL = unit(6);
-
+const unit M = unit(std::vector<int8_t>{1,0,0,0,0,0,0});
+const unit KG = unit(std::vector<int8_t>{0,1,0,0,0,0,0});
+const unit S = unit(std::vector<int8_t>{0,0,1,0,0,0,0});
+const unit A = unit(std::vector<int8_t>{0,0,0,1,0,0,0});
+const unit K = unit(std::vector<int8_t>{0,0,0,0,1,0,0});
+const unit CD = unit(std::vector<int8_t>{0,0,0,0,0,1,0});
+const unit MOL = unit(std::vector<int8_t>{0,0,0,0,0,0,1});
 
 // Derived units
 const unit HZ = unit() / S;
@@ -100,8 +104,6 @@ const unit H = OHM * S;
 const unit SIEMENS = A / V;
 const unit WB = V * S;
 const unit T = WB / (M^2);
-
-
 
 // Constants
 const val c_0 = 2.997'924'58e8 * M/S;

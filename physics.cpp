@@ -7,6 +7,7 @@
 
 
 
+
 // UNIT //
 std::string si_strings[7] = {"m","kg","s","A","K","cd","mol"};
 std::map<unit, std::string> si_special_names{
@@ -29,25 +30,6 @@ unit::unit(const std::vector<int8_t> si_units) {
     int size = si_units.size();
     for(int i = 0; i < std::min(7, size); i++) {
         si[i] = si_units[i];
-    }
-}
-unit::unit(const int si_unit) {
-    si[si_unit] = 1;
-}
-unit::unit(const std::string si_unit) {
-    for(int i = 0; i < 7; i++) {
-        si[i] = 0;
-        if(si_unit == si_strings[i]) {
-            si[i] = 1;
-        }
-    }
-}
-unit::unit(const char* si_unit) {
-    for(int i = 0; i < 7; i++) {
-        si[i] = 0;
-        if(si_unit == si_strings[i]) {
-            si[i] = 1;
-        }
     }
 }
 
@@ -123,7 +105,6 @@ std::ostream& operator<<(std::ostream& os, const unit& u) {
 
 
 // VAL //
-
 val::val(const double value, const class unit unit) {
     this->v = value;
     this->u = unit;
@@ -135,32 +116,48 @@ std::string val::to_string() const {
 val::operator std::string() const {
     return this->to_string();
 }
+val::operator int() const { return v; }
+val::operator float() const { return v; }
+val::operator double() const { return v; }
+val::operator long double() const { return v; }
 
-val val::operator+(val x) const {
-    if(u.to_string() != x.u.to_string()) throw std::invalid_argument("Unit Error");
-    return val(v + x.v, u);
+val operator+(val x, val y) {
+    if(x.u.to_string() != y.u.to_string()) throw std::invalid_argument("Unit Error");
+    return val(x.v + y.v, x.u);
 }
-val val::operator-(val x) const {
-    if(u.to_string() != x.u.to_string()) throw std::invalid_argument("Unit Error");
-    return val(v - x.v, u);
+val operator-(val x, val y) {
+    if(x.u.to_string() != y.u.to_string()) throw std::invalid_argument("Unit Error");
+    return val(x.v - y.v, x.u);
 }
-val val::operator*(val x) const {
-    return val(v * x.v, u * x.u);
+val operator*(val x, val y) {
+    return val(x.v * y.v, x.u * y.u);
 }
-val val::operator/(val x) const {
-    return val(v / x.v, u / x.u);
+val operator/(val x, val y) {
+    return val(x.v / y.v, x.u / y.u);
 }
-val val::operator^(int x) const {
-    return val(pow(v,x), u^x);
-}
-
-bool val::operator<(val x) const {
-    return v < x.v;
-}
-bool val::operator>(val x) const {
-    return v > x.v;
+val operator^(val x, int y) {
+    return val(pow(x.v,y), x.u^y);
 }
 
+bool operator<(val x, val y) {
+    return x.v < y.v;
+}
+bool operator>(val x, val y) {
+    return x.v > y.v;
+}
+
+val operator*(val x, long double y) {
+    return val(x.v * y, x.u);
+}
+val operator*(long double x, val y) {
+    return val(y.v * x, y.u);
+}
+val operator/(val x, long double y) {
+    return val(x.v / y, x.u);
+}
+val operator/(long double x, val y) {
+    return val(y.v / x, y.u);
+}
 
 val operator*(const float x, const unit y){
     return val(x, y);
