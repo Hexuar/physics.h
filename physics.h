@@ -87,42 +87,50 @@ std::ostream& operator<<(std::ostream& os, const val& v);
 
 
 // SI Units
-const unit M = unit(std::vector<int8_t>{1,0,0,0,0,0,0});
-const unit KG = unit(std::vector<int8_t>{0,1,0,0,0,0,0});
-const unit S = unit(std::vector<int8_t>{0,0,1,0,0,0,0});
-const unit A = unit(std::vector<int8_t>{0,0,0,1,0,0,0});
-const unit K = unit(std::vector<int8_t>{0,0,0,0,1,0,0});
-const unit CD = unit(std::vector<int8_t>{0,0,0,0,0,1,0});
-const unit MOL = unit(std::vector<int8_t>{0,0,0,0,0,0,1});
+const unit M = unit(std::vector<int8_t>{1,0,0,0,0,0,0}); // Metre
+const unit KG = unit(std::vector<int8_t>{0,1,0,0,0,0,0}); // Kilogram
+const unit S = unit(std::vector<int8_t>{0,0,1,0,0,0,0}); // Second
+const unit A = unit(std::vector<int8_t>{0,0,0,1,0,0,0}); // Ampere
+const unit K = unit(std::vector<int8_t>{0,0,0,0,1,0,0}); // Kelvin
+const unit CD = unit(std::vector<int8_t>{0,0,0,0,0,1,0}); // Candela
+const unit MOL = unit(std::vector<int8_t>{0,0,0,0,0,0,1}); // Mole
 
 // Derived units
-const unit HZ = S^-1;
-const unit N = KG * M / (S^2);
-const unit J = N * M;
-const unit W = J / S;
-const unit PA = N / (M^2);
-const unit V = W / A;
-const unit C = A * S;
-const unit OHM = V / A;
-const unit F = C / V;
-const unit H = OHM * S;
-const unit SIEMENS = A / V;
-const unit WB = V * S;
-const unit T = WB / (M^2);
+const unit HZ = S^-1; // Hertz
+const unit N = KG * M / (S^2); // Newton
+const unit J = N * M; // Joule
+const unit W = J / S; // Watt
+const unit PA = N / (M^2); // Pascal
+const unit V = W / A; // Volt
+const unit C = A * S; // Coulomb
+const unit OHM = V / A; // Ohm
+const unit F = C / V; // Farad
+const unit H = OHM * S; // Henry
+const unit SIEMENS = A / V; // Siemens
+const unit WB = V * S; // Weber
+const unit T = WB / (M^2); // Tesla
+
+// Non-SI units
+const val Å = 1e-10 * M; // Ångström
+const val fermi = 1e-15 * M; // Fermi
+const val bohr = 0.529'117 * Å; // Bohr
+const val AU = 1.495'978'70e11 * M; // Astronomical unit
+const val lightyear = 6.32e4 * AU; // Light-year
+const val parsec = 3.262 * lightyear; // Parsec
 
 // Constants
-const val c_0 = 2.997'924'58e8 * M/S;
-const val μ_0 = 4 * M_PI * 1e-7 * (V*S)/(A*M);
-const val ε_0 = (val)1 / (μ_0 * c_0^2);
-const val G = 6.674'08e-11 * (N*(M^2))/(KG^2);
-const val g = 9.806'65 * M/S;
-const val m_e = 9.109'383'56e-31 * KG;
-const val m_μ = 1.883'531'59e-28 * KG;
-const val m_p = 1.672'621'90e-27 * KG;
-const val m_n = 1.674'927'47e-27 * KG;
-const val m_u = 1.660'539'04e-27 * KG;
-const val e = 1.602'176'634e-19 * C;
-const val h = 6.626'070'15e-34 * J*S;
-const val k_B = 1.380'649e-23 * J/K;
-const val N_A = 6.022'140'76e+23 / MOL;
-const val R = k_B * N_A;
+const val c_0 = 2.997'924'58e8 * M/S; // Speed of light
+const val μ_0 = 4 * M_PI * 1e-7 * (V*S)/(A*M); // Permeability
+const val ε_0 = (val)1 / (μ_0 * c_0^2); // Permittivity
+const val G = 6.674'08e-11 * (N*(M^2))/(KG^2); // Gravitational constant
+const val g = 9.806'65 * M/S; // Acceleration of gravity at sea level
+const val m_e = 9.109'383'56e-31 * KG; // Electron rest mass
+const val m_μ = 1.883'531'59e-28 * KG; // Muon rest mass
+const val m_p = 1.672'621'90e-27 * KG; // Proton rest mass
+const val m_n = 1.674'927'47e-27 * KG; // Neutron rest mass
+const val m_u = 1.660'539'04e-27 * KG; // Atomic mass constant
+const val e = 1.602'176'634e-19 * C; // Elementary charge
+const val h = 6.626'070'15e-34 * J*S; // Planck constant
+const val k_B = 1.380'649e-23 * J/K; // Boltzmann constant
+const val N_A = 6.022'140'76e+23 / MOL; // Avogadro constant
+const val R = k_B * N_A; // Molar gas constant
