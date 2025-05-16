@@ -13,4 +13,8 @@ int main() {
     val i_2 = i * r_2 / (r_1 + r_2);
 
     print(i, i_1, i_2);
+
+    print(43462);
+
+    print(M^2);
 }

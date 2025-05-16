@@ -113,6 +113,11 @@ bool unit::operator<(const unit x) const {
     return si_vector < si_vectorx;
 }
 
+std::ostream& operator<<(std::ostream& os, const unit& u) {
+    os << u.to_string();
+    return os;
+}
+
 
 
 
@@ -169,4 +174,9 @@ val operator*(const val x, const unit y){
 }
 val operator/(const val x, const unit y){
     return val(x.v, x.u / y);
+}
+
+std::ostream& operator<<(std::ostream& os, const val& v) {
+    os << v.to_string();
+    return os;
 }

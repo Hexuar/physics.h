@@ -28,9 +28,11 @@ public:
 
     bool operator<(const unit x) const;
 
-//private:
+private:
     int8_t si[7];
 };
+
+std::ostream& operator<<(std::ostream& os, const unit& v);
 
 
 
@@ -66,6 +68,9 @@ std::string operator+(const std::string x, val y);
 // Value - Unit operations
 val operator*(const val x, const unit y);
 val operator/(const val x, const unit y);
+
+// Stream
+std::ostream& operator<<(std::ostream& os, const val& v);
 
 
 

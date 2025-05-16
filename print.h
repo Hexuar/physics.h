@@ -6,8 +6,8 @@ void print() {
     std::cout << std::endl;
 };
 
-template <typename... Types>
-void print(std::string var1, Types...var2) {
+template <typename T, typename... Types>
+void print(T var1, Types...var2) {
     std::cout << var1 << " ";
     print(var2...);
 }
