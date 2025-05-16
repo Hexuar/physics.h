@@ -17,8 +17,9 @@ private:
 public:
     explicit unit(std::vector<int8_t> si_units = {0,0,0,0,0,0,0});
 
-    // String conversion
+    // Conversions
     operator std::string() const;
+    explicit operator std::vector<int8_t>() const;
 
     // Operators
     unit operator*(unit x) const;
@@ -28,10 +29,8 @@ public:
     bool operator<(unit x) const;
     bool operator==(unit x) const;
     bool operator!=(unit x) const;
-
-    explicit operator std::vector<int8_t>() const;
 };
-std::ostream& operator<<(std::ostream& os, const unit& v);
+std::ostream& operator<<(std::ostream& os, const unit& u);
 
 
 
@@ -39,10 +38,11 @@ std::ostream& operator<<(std::ostream& os, const unit& v);
 
 // Represents a physical value with dimension.
 class val {
-public:
+private:
     long double v;
     unit u;
 
+public:
     val(double v, unit u = unit());
 
     // Conversions
@@ -51,33 +51,34 @@ public:
     explicit operator float() const;
     explicit operator double() const;
     explicit operator long double() const;
+    explicit operator unit() const;
+
+    // Operators
+    val operator+(val x) const;
+    val operator-(val x) const;
+    val operator*(val x) const;
+    val operator*(unit x) const;
+    val operator/(val x) const;
+    val operator/(unit x) const;
+    val operator^(int x) const;
+
+    bool operator<(val x) const;
+    bool operator>(val x) const;
+    bool operator<=(val x) const;
+    bool operator>=(val x) const;
+    bool operator==(val x) const;
+    bool operator!=(val x) const;
 };
 
-// Operators
-val operator+(val x, val y);
-val operator-(val x, val y);
-
-val operator*(val x, val y);
 val operator*(val x, long double y);
 val operator*(long double x, val y);
-val operator*(val x, unit y);
-
-val operator/(val x, val y);
 val operator/(val x, long double y);
 val operator/(long double x, val y);
-val operator/(val x, unit y);
 
-val operator^(val x, int y);
-
-bool operator<(val x, val y);
-bool operator>(val x, val y);
-bool operator<=(val x, val y);
-bool operator>=(val x, val y);
-bool operator==(val x, val y);
-bool operator!=(val x, val y);
 
 // Converison operators
-val operator*(float x, unit y);
+val operator*(long double x, unit y);
+val operator/(long double x, unit y);
 std::string operator+(std::string x, val y);
 std::ostream& operator<<(std::ostream& os, const val& v);
 
