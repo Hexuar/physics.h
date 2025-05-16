@@ -104,18 +104,18 @@ const unit T = WB / (M^2);
 
 
 // Constants
-const val c_0 = 2.997'924'58 * pow(10, 8) * M/S;
-const val μ_0 = 4 * M_PI * pow(10, -7) * (V*S)/(A*M);
+const val c_0 = 2.997'924'58e8 * M/S;
+const val μ_0 = 4 * M_PI * 1e-7 * (V*S)/(A*M);
 const val ε_0 = (val)1 / (μ_0 * c_0^2);
-const val G = 6.674'08 * pow(10, -11) * (N*M*M)/(KG^2);
+const val G = 6.674'08e-11 * (N*(M^2))/(KG^2);
 const val g = 9.806'65 * M/S;
-const val m_e = 9.109'383'56 * pow(10,-31) * KG;
-const val m_μ = 1.883'531'59 * pow(10,-28) * KG;
-const val m_p = 1.672'621'90 * pow(10,-27) * KG;
-const val m_n = 1.674'927'47 * pow(10,-27) * KG;
-const val m_u = 1.660'539'04 * pow(10,-27) * KG;
-const val e = 1.602'176'634 * pow(10,-19) * C;
-const val h = 6.626'070'15 * pow(10,-34) * J*S;
-const val k_B = 1.380'649 * pow(10,-23) * J/K;
-const val N_A = 6.022'140'76 * pow(10,23) / MOL;
+const val m_e = 9.109'383'56e-31 * KG;
+const val m_μ = 1.883'531'59e-28 * KG;
+const val m_p = 1.672'621'90e-27 * KG;
+const val m_n = 1.674'927'47e-27 * KG;
+const val m_u = 1.660'539'04e-27 * KG;
+const val e = 1.602'176'634e-19 * C;
+const val h = 6.626'070'15e-34 * J*S;
+const val k_B = 1.380'649e-23 * J/K;
+const val N_A = 6.022'140'76e+23 / MOL;
 const val R = k_B * N_A;
