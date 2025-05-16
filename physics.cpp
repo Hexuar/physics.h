@@ -119,70 +119,36 @@ val::operator double() const { return v; }
 val::operator long double() const { return v; }
 
 val operator+(val x, val y) {
-    if(x.u != y.u) throw std::invalid_argument("Unit Error");
-    return val(x.v + y.v, x.u);
+  if (x.u != y.u) throw std::invalid_argument("Unit Error");
+  return val(x.v + y.v, x.u);
 }
 val operator-(val x, val y) {
-    if(x.u != y.u) throw std::invalid_argument("Unit Error");
-    return val(x.v - y.v, x.u);
+  if (x.u != y.u) throw std::invalid_argument("Unit Error");
+  return val(x.v - y.v, x.u);
 }
-val operator*(val x, val y) {
-    return val(x.v * y.v, x.u * y.u);
-}
-val operator/(val x, val y) {
-    return val(x.v / y.v, x.u / y.u);
-}
-val operator^(val x, int y) {
-    return val(pow(x.v,y), x.u^y);
-}
+val operator*(val x, val y) { return val(x.v * y.v, x.u * y.u); }
+val operator/(val x, val y) { return val(x.v / y.v, x.u / y.u); }
+val operator^(val x, int y) { return val(pow(x.v, y), x.u ^ y); }
 
-bool operator<(val x, val y) {
-    return x.v < y.v;
-}
-bool operator>(val x, val y) {
-    return x.v > y.v;
-}
-bool operator<=(val x, val y) {
-    return x.v < y.v;
-}
-bool operator>=(val x, val y) {
-    return x.v > y.v;
-}
-bool operator==(val x, val y) {
-    return x.v == y.v && x.u == y.u;
-}
-bool operator!=(val x, val y) {
-    return x.v != y.v && x.u != y.u;
-}
+bool operator<(val x, val y) { return x.v < y.v; }
+bool operator>(val x, val y) { return x.v > y.v; }
+bool operator<=(val x, val y) { return x.v < y.v; }
+bool operator>=(val x, val y) { return x.v > y.v; }
+bool operator==(val x, val y) { return x.v == y.v && x.u == y.u; }
+bool operator!=(val x, val y) { return x.v != y.v && x.u != y.u; }
 
-val operator*(val x, long double y) {
-    return val(x.v * y, x.u);
-}
-val operator*(long double x, val y) {
-    return val(y.v * x, y.u);
-}
-val operator/(val x, long double y) {
-    return val(x.v / y, x.u);
-}
-val operator/(long double x, val y) {
-    return val(y.v / x, y.u);
-}
+val operator*(val x, long double y) { return val(x.v * y, x.u); }
+val operator*(long double x, val y) { return val(y.v * x, y.u); }
+val operator/(val x, long double y) { return val(x.v / y, x.u); }
+val operator/(long double x, val y) { return val(y.v / x, y.u); }
 
-val operator*(float x, unit y){
-    return val(x, y);
-}
-std::string operator+(std::string x, val y){
-    return x + (std::string)y;
-}
+val operator*(float x, unit y) { return val(x, y); }
+std::string operator+(std::string x, val y) { return x + (std::string)y; }
 
-val operator*(val x, unit y){
-    return val(x.v, x.u * y);
-}
-val operator/(val x, unit y){
-    return val(x.v, x.u / y);
-}
+val operator*(val x, unit y) { return val(x.v, x.u * y); }
+val operator/(val x, unit y) { return val(x.v, x.u / y); }
 
-std::ostream& operator<<(std::ostream& os, const val& v) {
+std::ostream &operator<<(std::ostream &os, const val &v) {
     os << (std::string)v;
     return os;
 }
