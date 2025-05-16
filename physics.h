@@ -15,7 +15,7 @@ private:
     int8_t si[7];
 
 public:
-    unit(std::vector<int8_t> si_units = {0,0,0,0,0,0,0});
+    explicit unit(std::vector<int8_t> si_units = {0,0,0,0,0,0,0});
 
     // String conversion
     operator std::string() const;
@@ -26,7 +26,10 @@ public:
     unit operator^(int x) const;
 
     bool operator<(unit x) const;
+    bool operator==(unit x) const;
     bool operator!=(unit x) const;
+
+    explicit operator std::vector<int8_t>() const;
 };
 std::ostream& operator<<(std::ostream& os, const unit& v);
 
@@ -52,7 +55,6 @@ public:
 
 // Operators
 val operator+(val x, val y);
-
 val operator-(val x, val y);
 
 val operator*(val x, val y);
@@ -69,6 +71,10 @@ val operator^(val x, int y);
 
 bool operator<(val x, val y);
 bool operator>(val x, val y);
+bool operator<=(val x, val y);
+bool operator>=(val x, val y);
+bool operator==(val x, val y);
+bool operator!=(val x, val y);
 
 // Converison operators
 val operator*(float x, unit y);
@@ -89,7 +95,7 @@ const unit CD = unit(std::vector<int8_t>{0,0,0,0,0,1,0});
 const unit MOL = unit(std::vector<int8_t>{0,0,0,0,0,0,1});
 
 // Derived units
-const unit HZ = unit() / S;
+const unit HZ = S^-1;
 const unit N = KG * M / (S^2);
 const unit J = N * M;
 const unit W = J / S;

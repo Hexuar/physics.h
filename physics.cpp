@@ -82,24 +82,17 @@ unit unit::operator^(int x) const {
 }
 
 bool unit::operator<(unit x) const {
-    std::vector<int8_t> si_vector, si_vectorx;
-
-    for(int i = 0; i < 7; i++) {
-        si_vector.push_back(si[i]);
-        si_vectorx.push_back(x.si[i]);
-    }
-
-    return si_vector < si_vectorx;
+    return (std::vector<int8_t>)*this < (std::vector<int8_t>)x;
+}
+bool unit::operator==(unit x) const {
+    return (std::vector<int8_t>)*this == (std::vector<int8_t>)x;
 }
 bool unit::operator!=(unit x) const {
-    std::vector<int8_t> si_vector, si_vectorx;
+    return (std::vector<int8_t>)*this != (std::vector<int8_t>)x;
+}
 
-    for(int i = 0; i < 7; i++) {
-        si_vector.push_back(si[i]);
-        si_vectorx.push_back(x.si[i]);
-    }
-
-    return si_vector != si_vectorx;
+unit::operator std::vector<int8_t>() const {
+    return std::vector<int8_t>(std::begin(this->si), std::end(this->si));
 }
 
 std::ostream& operator<<(std::ostream& os, const unit& u) {
@@ -148,6 +141,18 @@ bool operator<(val x, val y) {
 }
 bool operator>(val x, val y) {
     return x.v > y.v;
+}
+bool operator<=(val x, val y) {
+    return x.v < y.v;
+}
+bool operator>=(val x, val y) {
+    return x.v > y.v;
+}
+bool operator==(val x, val y) {
+    return x.v == y.v && x.u == y.u;
+}
+bool operator!=(val x, val y) {
+    return x.v != y.v && x.u != y.u;
 }
 
 val operator*(val x, long double y) {
