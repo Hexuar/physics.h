@@ -26,14 +26,14 @@ std::map<unit, std::string> si_special_names{
     { T, "T" }
 };
 
-unit::unit(const std::vector<int8_t> si_units) {
+unit::unit(std::vector<int8_t> si_units) {
     int size = si_units.size();
     for(int i = 0; i < std::min(7, size); i++) {
         si[i] = si_units[i];
     }
 }
 
-std::string unit::to_string() const {
+unit::operator std::string() const {
     // Returns special character if present in map
     std::string output = si_special_names[*this];
     if(output != "") {
@@ -52,11 +52,8 @@ std::string unit::to_string() const {
     }
     return output;
 }
-unit::operator std::string() const {
-    return this->to_string();
-}
 
-unit unit::operator*(const unit x) const {
+unit unit::operator*(unit x) const {
     std::vector<int8_t> si_units;
 
     for(int i = 0; i < 7; i++) {
@@ -65,7 +62,7 @@ unit unit::operator*(const unit x) const {
 
     return unit(si_units);
 }
-unit unit::operator/(const unit x) const {
+unit unit::operator/(unit x) const {
     std::vector<int8_t> si_units;
 
     for(int i = 0; i < 7; i++) {
@@ -84,7 +81,7 @@ unit unit::operator^(int x) const {
     return unit(si_units);
 }
 
-bool unit::operator<(const unit x) const {
+bool unit::operator<(unit x) const {
     std::vector<int8_t> si_vector, si_vectorx;
 
     for(int i = 0; i < 7; i++) {
@@ -94,9 +91,19 @@ bool unit::operator<(const unit x) const {
 
     return si_vector < si_vectorx;
 }
+bool unit::operator!=(unit x) const {
+    std::vector<int8_t> si_vector, si_vectorx;
+
+    for(int i = 0; i < 7; i++) {
+        si_vector.push_back(si[i]);
+        si_vectorx.push_back(x.si[i]);
+    }
+
+    return si_vector != si_vectorx;
+}
 
 std::ostream& operator<<(std::ostream& os, const unit& u) {
-    os << u.to_string();
+    os << (std::string)u;
     return os;
 }
 
@@ -105,16 +112,13 @@ std::ostream& operator<<(std::ostream& os, const unit& u) {
 
 
 // VAL //
-val::val(const double value, const class unit unit) {
-    this->v = value;
-    this->u = unit;
+val::val(double v, unit u) {
+    this->v = v;
+    this->u = u;
 }
 
-std::string val::to_string() const {
-    return std::to_string(v) + " " + u.to_string();
-}
 val::operator std::string() const {
-    return this->to_string();
+    return std::to_string(v) + " " + (std::string)u;
 }
 val::operator int() const { return v; }
 val::operator float() const { return v; }
@@ -122,11 +126,11 @@ val::operator double() const { return v; }
 val::operator long double() const { return v; }
 
 val operator+(val x, val y) {
-    if(x.u.to_string() != y.u.to_string()) throw std::invalid_argument("Unit Error");
+    if(x.u != y.u) throw std::invalid_argument("Unit Error");
     return val(x.v + y.v, x.u);
 }
 val operator-(val x, val y) {
-    if(x.u.to_string() != y.u.to_string()) throw std::invalid_argument("Unit Error");
+    if(x.u != y.u) throw std::invalid_argument("Unit Error");
     return val(x.v - y.v, x.u);
 }
 val operator*(val x, val y) {
@@ -159,21 +163,21 @@ val operator/(long double x, val y) {
     return val(y.v / x, y.u);
 }
 
-val operator*(const float x, const unit y){
+val operator*(float x, unit y){
     return val(x, y);
 }
-std::string operator+(const std::string x, val y){
-    return x + y.to_string();
+std::string operator+(std::string x, val y){
+    return x + (std::string)y;
 }
 
-val operator*(const val x, const unit y){
+val operator*(val x, unit y){
     return val(x.v, x.u * y);
 }
-val operator/(const val x, const unit y){
+val operator/(val x, unit y){
     return val(x.v, x.u / y);
 }
 
 std::ostream& operator<<(std::ostream& os, const val& v) {
-    os << v.to_string();
+    os << (std::string)v;
     return os;
 }

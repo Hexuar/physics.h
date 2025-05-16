@@ -15,4 +15,6 @@ int main() {
     print(i, i_1, i_2);
 
     print(1.2 + (double)i);
+
+    print(M, 1 * KG / M, "a" + i);
 }

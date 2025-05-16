@@ -15,20 +15,19 @@ private:
     int8_t si[7];
 
 public:
-    unit(const std::vector<int8_t> si_units = {0,0,0,0,0,0,0});
+    unit(std::vector<int8_t> si_units = {0,0,0,0,0,0,0});
 
     // String conversion
-    std::string to_string() const;
     operator std::string() const;
 
     // Operators
-    unit operator*(const unit x) const;
-    unit operator/(const unit x) const;
+    unit operator*(unit x) const;
+    unit operator/(unit x) const;
     unit operator^(int x) const;
 
-    bool operator<(const unit x) const;
+    bool operator<(unit x) const;
+    bool operator!=(unit x) const;
 };
-
 std::ostream& operator<<(std::ostream& os, const unit& v);
 
 
@@ -41,10 +40,9 @@ public:
     long double v;
     unit u;
 
-    val(const double v, const unit u = unit());
+    val(double v, unit u = unit());
 
     // Conversions
-    std::string to_string() const;
     operator std::string() const;
     explicit operator int() const;
     explicit operator float() const;
