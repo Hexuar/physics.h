@@ -70,6 +70,9 @@ std::string unit::to_string() const {
     }
     return output;
 }
+unit::operator std::string() const {
+    return this->to_string();
+}
 
 unit unit::operator*(const unit x) const {
     std::vector<int8_t> si_units;
@@ -89,6 +92,16 @@ unit unit::operator/(const unit x) const {
 
     return unit(si_units);
 }
+unit unit::operator^(int x) const {
+    std::vector<int8_t> si_units;
+
+    for(int i = 0; i < 7; i++) {
+        si_units.push_back(si[i] * x);
+    }
+
+    return unit(si_units);
+}
+
 bool unit::operator<(const unit x) const {
     std::vector<int8_t> si_vector, si_vectorx;
 
@@ -132,6 +145,17 @@ val val::operator*(val x) const {
 val val::operator/(val x) const {
     return val(v / x.v, u / x.u);
 }
+val val::operator^(int x) const {
+    return val(pow(v,x), u^x);
+}
+
+bool val::operator<(val x) const {
+    return v < x.v;
+}
+bool val::operator>(val x) const {
+    return v > x.v;
+}
+
 
 val operator*(const float x, const unit y){
     return val(x, y);

@@ -19,13 +19,16 @@ public:
 
     // String conversion
     std::string to_string() const;
+    operator std::string() const;
 
     // Operators
     unit operator*(const unit x) const;
     unit operator/(const unit x) const;
+    unit operator^(int x) const;
+
     bool operator<(const unit x) const;
 
-private:
+//private:
     int8_t si[7];
 };
 
@@ -50,6 +53,10 @@ public:
     val operator-(val x) const;
     val operator*(val x) const;
     val operator/(val x) const;
+    val operator^(int x) const;
+
+    bool operator<(val x) const;
+    bool operator>(val x) const;
 };
 
 // Converisons
@@ -76,10 +83,10 @@ const unit MOL = unit(6);
 
 // Derived units
 const unit HZ = (unit)1 / S;
-const unit N = KG * M / (S * S);
+const unit N = KG * M / (S^2);
 const unit J = N * M;
 const unit W = J / S;
-const unit PA = N / (M * M);
+const unit PA = N / (M^2);
 const unit V = W / A;
 const unit C = A * S;
 const unit OHM = V / A;
@@ -87,15 +94,15 @@ const unit F = C / V;
 const unit H = OHM * S;
 const unit SIEMENS = A / V;
 const unit WB = V * S;
-const unit T = WB / (M * M);
+const unit T = WB / (M^2);
 
 
 
 // Constants
 const val c_0 = 2.997'924'58 * pow(10, 8) * M/S;
 const val μ_0 = 4 * M_PI * pow(10, -7) * (V*S)/(A*M);
-const val ε_0 = (val)1 / (μ_0 * c_0 * c_0);
-const val G = 6.674'08 * pow(10, -11) * (N*M*M)/(KG*KG);
+const val ε_0 = (val)1 / (μ_0 * c_0^2);
+const val G = 6.674'08 * pow(10, -11) * (N*M*M)/(KG^2);
 const val g = 9.806'65 * M/S;
 const val m_e = 9.109'383'56 * pow(10,-31) * KG;
 const val m_μ = 1.883'531'59 * pow(10,-28) * KG;
