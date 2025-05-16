@@ -1,10 +1,7 @@
 #pragma once
-#include <cstdint>
+
 #include <string>
-#include <map>
 #include <vector>
-#include <algorithm>
-#include <stdexcept>
 #include <math.h>
 
 
@@ -26,6 +23,7 @@ public:
     // Operators
     unit operator*(const unit x) const;
     unit operator/(const unit x) const;
+    bool operator<(const unit x) const;
 
 private:
     int8_t si[7];
@@ -67,29 +65,29 @@ val operator/(const val x, const unit y);
 
 
 // SI Units
-const unit K = unit(0);
-const unit M = unit(1);
-const unit A = unit(2);
-const unit S = unit(3);
-const unit MOL = unit(4);
-const unit KG = unit(5);
-const unit CD = unit(6);
+const unit M = unit(0);
+const unit KG = unit(1);
+const unit S = unit(2);
+const unit A = unit(3);
+const unit K = unit(4);
+const unit CD = unit(5);
+const unit MOL = unit(6);
+
 
 // Derived units
-const unit HZ = unit(std::vector<int8_t>{0,0,0,-1,0,0,0});
-const unit N = unit(std::vector<int8_t>{0,1,0,-2,0,1,0});
-const unit PA = unit(std::vector<int8_t>{0,-1,0,-2,0,1,0});
-const unit J = unit(std::vector<int8_t>{0,2,0,-2,0,1,0});
-const unit W = unit(std::vector<int8_t>{0,2,0,-3,0,1,0});
-const unit C = unit(std::vector<int8_t>{0,0,1,1,0,0,0});
-const unit V = unit(std::vector<int8_t>{0,2,-1,-3,0,1,0});
-const unit F = unit(std::vector<int8_t>{0,-2,2,4,0,-1,0});
-const unit OHM = unit(std::vector<int8_t>{0,2,-2,-3,0,1,0});
-const unit SIEMENS = unit(std::vector<int8_t>{0,-2,2,3,0,-1,0});
-const unit WB = unit(std::vector<int8_t>{0,2,-1,-2,0,1,0});
-const unit T = unit(std::vector<int8_t>{0,0,-1,-2,0,1,0});
-const unit H = unit(std::vector<int8_t>{0,2,-2,-2,0,1,0});
-const unit LX = unit(std::vector<int8_t>{0,-2,0,0,0,0,1});
+const unit HZ = (unit)1 / S;
+const unit N = KG * M / (S * S);
+const unit J = N * M;
+const unit W = J / S;
+const unit PA = N / (M * M);
+const unit V = W / A;
+const unit C = A * S;
+const unit OHM = V / A;
+const unit F = C / V;
+const unit H = OHM * S;
+const unit SIEMENS = A / V;
+const unit WB = V * S;
+const unit T = WB / (M * M);
 
 
 
@@ -107,5 +105,5 @@ const val m_u = 1.660'539'04 * pow(10,-27) * KG;
 const val e = 1.602'176'634 * pow(10,-19) * C;
 const val h = 6.626'070'15 * pow(10,-34) * J*S;
 const val k_B = 1.380'649 * pow(10,-23) * J/K;
-const val N_A = 6.022'140'76 * pow(10,23);
+const val N_A = 6.022'140'76 * pow(10,23) / MOL;
 const val R = k_B * N_A;
