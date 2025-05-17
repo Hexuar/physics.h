@@ -1,6 +1,8 @@
 #include "physics.h"
 #include "print.h"
 
+using namespace physics;
+
 int main() {
     // A 12V battery with two resistors wired in parallel
     val u = 12 * V;

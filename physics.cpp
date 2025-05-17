@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <map>
 
+using namespace physics;
+
 
 
 
@@ -94,7 +96,7 @@ bool unit::operator!=(unit x) const {
     return (std::vector<int8_t>)*this != (std::vector<int8_t>)x;
 }
 
-std::ostream& operator<<(std::ostream& os, const unit& u) {
+std::ostream& physics::operator<<(std::ostream& os, const unit& u) {
     os << (std::string)u;
     return os;
 }
@@ -139,15 +141,15 @@ bool val::operator>=(val x) const { return v > x.v; }
 bool val::operator==(val x) const { return v == x.v && u == x.u; }
 bool val::operator!=(val x) const { return v != x.v && u != x.u; }
 
-val operator*(val x, long double y) { return val((long double)x * y, (unit)x); }
-val operator*(long double x, val y) { return val((long double)y * x, (unit)y); }
-val operator/(val x, long double y) { return val((long double)x / y, (unit)x); }
-val operator/(long double x, val y) { return val((long double)y / x, (unit)y); }
+val physics::operator*(val x, long double y) { return val((long double)x * y, (unit)x); }
+val physics::operator*(long double x, val y) { return val((long double)y * x, (unit)y); }
+val physics::operator/(val x, long double y) { return val((long double)x / y, (unit)x); }
+val physics::operator/(long double x, val y) { return val((long double)y / x, (unit)y); }
 
-val operator*(long double x, unit y) { return val(x, y); }
-val operator/(long double x, unit y) { return val(x, y^-1); }
-std::string operator+(std::string x, val y) { return x + (std::string)y; }
-std::ostream &operator<<(std::ostream &os, const val &v) {
+val physics::operator*(long double x, unit y) { return val(x, y); }
+val physics::operator/(long double x, unit y) { return val(x, y^-1); }
+std::string physics::operator+(std::string x, val y) { return x + (std::string)y; }
+std::ostream& physics::operator<<(std::ostream &os, const val &v) {
     os << (std::string)v;
     return os;
 }
