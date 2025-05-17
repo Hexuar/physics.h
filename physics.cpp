@@ -132,11 +132,13 @@ val::val(double v, unit u) {
     this->v = v;
     this->e = 0;
     this->u = u;
+    calculate_exponent();
 }
 val::val(double v, int8_t e, unit u) {
     this->v = v;
     this->e = e;
     this->u = u;
+    calculate_exponent();
 }
 
 val::operator std::string() const {
@@ -205,24 +207,29 @@ val physics::operator""_a(long double v) { return val(v, -18); }
 val physics::operator""_z(long double v) { return val(v, -21); }
 val physics::operator""_y(long double v) { return val(v, -24); }
 
+void val::calculate_exponent() {
 
-
-
-
-int8_t getExponent(long double &x) {
-    int n = 0;
-    if(x > 1) {
-        while(x >= 10) {
-            n++;
-            x /= 10;
+    if(abs(v) > 1) {
+        while(abs(v) >= 10) {
+            e++;
+            v /= 10;
         }
     }
-    else if(x < 1) {
-        while(x <= 1) {
-            n--;
-            x *= 10;
+    else if(abs(v) < 1.0) {
+        while(abs(v) <= 1.0) {
+            e--;
+            v *= 10;
         }
     }
 
-    return n;
+    if(e > 3 || e < -3) {
+        if(e % 3 == 1 || e % 3 == -2) {
+            e--;
+            v *= 10;
+        }
+        if(e % 3 == 2|| e % 3 == -1) {
+            e++;
+            v /= 10;
+        }
+    }
 }

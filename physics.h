@@ -49,6 +49,9 @@ namespace physics {
         val(double v, unit u = unit());
         val(double v, int8_t e, unit u = unit());
 
+        //
+        void calculate_exponent();
+
         // Conversions
         operator std::string() const;
         explicit operator int() const;
@@ -87,26 +90,26 @@ namespace physics {
     std::ostream& operator<<(std::ostream& os, const val& v);
 
     // Suffixes
-    val operator ""_Y(long double v);
-    val operator ""_Z(long double v);
-    val operator ""_E(long double v);
-    val operator ""_P(long double v);
-    val operator ""_T(long double v);
-    val operator ""_G(long double v);
-    val operator ""_M(long double v);
-    val operator ""_k(long double v);
-    val operator ""_h(long double v);
-    val operator ""_da(long double v);
-    val operator ""_d(long double v);
-    val operator ""_c(long double v);
-    val operator ""_m(long double v);
-    val operator ""_mu(long double v);
-    val operator ""_n(long double v);
-    val operator ""_p(long double v);
-    val operator ""_f(long double v);
-    val operator ""_a(long double v);
-    val operator ""_z(long double v);
-    val operator ""_y(long double v);
+    val operator ""_Y(long double); // Yotta
+    val operator ""_Z(long double); // Zetta
+    val operator ""_E(long double); // Exa
+    val operator ""_P(long double); // Peta
+    val operator ""_T(long double); // Tera
+    val operator ""_G(long double); // Giga
+    val operator ""_M(long double); // Mega
+    val operator ""_k(long double); // Kilo
+    val operator ""_h(long double); // Hecto
+    val operator ""_da(long double); // Deca
+    val operator ""_d(long double); // Deci
+    val operator ""_c(long double); // Centi
+    val operator ""_m(long double); // Milli
+    val operator ""_mu(long double); // Micro
+    val operator ""_n(long double); // Nano
+    val operator ""_p(long double); // Pico
+    val operator ""_f(long double); // Femto
+    val operator ""_a(long double); // Atto
+    val operator ""_z(long double); // Zepto
+    val operator ""_y(long double); // Yocto
 
 
 
@@ -145,19 +148,21 @@ namespace physics {
     const val parsec = 3.262 * lightyear; // Parsec
 
     // Constants
-    const val c_0 = 2.997'924'58e8 * M/S; // Speed of light
-    const val μ_0 = 4 * M_PI * 1e-7 * (V*S)/(A*M); // Permeability
-    const val ε_0 = (val)1 / (μ_0 * c_0^2); // Permittivity
-    const val G = 6.674'08e-11 * (N*(M^2))/(KG^2); // Gravitational constant
-    const val g = 9.806'65 * M/S; // Acceleration of gravity at sea level
-    const val m_e = 9.109'383'56e-31 * KG; // Electron rest mass
-    const val m_μ = 1.883'531'59e-28 * KG; // Muon rest mass
-    const val m_p = 1.672'621'90e-27 * KG; // Proton rest mass
-    const val m_n = 1.674'927'47e-27 * KG; // Neutron rest mass
-    const val m_u = 1.660'539'04e-27 * KG; // Atomic mass constant
-    const val e = 1.602'176'634e-19 * C; // Elementary charge
-    const val h = 6.626'070'15e-34 * J*S; // Planck constant
-    const val k_B = 1.380'649e-23 * J/K; // Boltzmann constant
-    const val N_A = 6.022'140'76e+23 / MOL; // Avogadro constant
-    const val R = k_B * N_A; // Molar gas constant
+    namespace constant {
+        const val c_0 = 2.997'924'58e8 * M/S; // Speed of light
+        const val μ_0 = 4 * M_PI * 1e-7 * (V*S)/(A*M); // Permeability
+        const val ε_0 = (val)1 / (μ_0 * c_0^2); // Permittivity
+        const val G = 6.674'08e-11 * (N*(M^2))/(KG^2); // Gravitational constant
+        const val g = 9.806'65 * M/S; // Acceleration of gravity at sea level
+        const val m_e = 9.109'383'56e-31 * KG; // Electron rest mass
+        const val m_μ = 1.883'531'59e-28 * KG; // Muon rest mass
+        const val m_p = 1.672'621'90e-27 * KG; // Proton rest mass
+        const val m_n = 1.674'927'47e-27 * KG; // Neutron rest mass
+        const val m_u = 1.660'539'04e-27 * KG; // Atomic mass constant
+        const val e = 1.602'176'634e-19 * C; // Elementary charge
+        const val h = 6.626'070'15e-34 * J*S; // Planck constant
+        const val k_B = 1.380'649e-23 * J/K; // Boltzmann constant
+        const val N_A = 6.022'140'76e+23 / MOL; // Avogadro constant
+        const val R = k_B * N_A; // Molar gas constant
+    };
 };
