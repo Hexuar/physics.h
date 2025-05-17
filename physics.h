@@ -41,11 +41,13 @@ namespace physics {
     // Represents a physical value with dimension.
     class val {
     private:
-        long double v;
-        unit u;
+        long double v; // Value
+        int8_t e; // Exponent
+        unit u; // Unit
 
     public:
         val(double v, unit u = unit());
+        val(double v, int8_t e, unit u = unit());
 
         // Conversions
         operator std::string() const;
@@ -78,10 +80,33 @@ namespace physics {
     val operator/(val x, long double y);
     val operator/(long double x, val y);
 
+    // Conversion operators
     val operator*(long double x, unit y);
     val operator/(long double x, unit y);
     std::string operator+(std::string x, val y);
     std::ostream& operator<<(std::ostream& os, const val& v);
+
+    // Suffixes
+    val operator ""_Y(long double v);
+    val operator ""_Z(long double v);
+    val operator ""_E(long double v);
+    val operator ""_P(long double v);
+    val operator ""_T(long double v);
+    val operator ""_G(long double v);
+    val operator ""_M(long double v);
+    val operator ""_k(long double v);
+    val operator ""_h(long double v);
+    val operator ""_da(long double v);
+    val operator ""_d(long double v);
+    val operator ""_c(long double v);
+    val operator ""_m(long double v);
+    val operator ""_mu(long double v);
+    val operator ""_n(long double v);
+    val operator ""_p(long double v);
+    val operator ""_f(long double v);
+    val operator ""_a(long double v);
+    val operator ""_z(long double v);
+    val operator ""_y(long double v);
 
 
 
