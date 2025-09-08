@@ -1,10 +1,11 @@
 #pragma once
+
 #include <string>
 #include <map>
 
 
 namespace super {
-    std::map<char, std::string> supertable{
+    std::map<char, std::string> supertable {
         {'0', "\u2070"},
         {'1', "\u00b9"},
         {'2', "\u00b2"},
@@ -19,6 +20,7 @@ namespace super {
         {'-', "\u207B"}
     };
 
+    // Returns a string of exponent characters corresponding to the input char or int.
     std::string super(char c) {
         return supertable[c];
     }
