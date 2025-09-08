@@ -1,14 +1,10 @@
 #include "physics.h"
 #include "superscript.h"
-
 #include <stdexcept>
 #include <map>
 
+
 using namespace physics;
-
-
-
-
 
 // UNIT //
 std::string si_strings[7] = {"m","kg","s","A","K","cd","mol"};
