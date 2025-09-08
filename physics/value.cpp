@@ -1,4 +1,6 @@
 #include "value.h"
+#include "unit.h"
+#include <cstdlib>
 #include <map>
 #include <cstdint>
 #include <stdexcept>
@@ -138,6 +140,6 @@ void val::calculate_exponent() {
 }
 
 std::string val::get_prefix() const {
-    if(abs(e) <= 24) return " " + prefix_names[e];
-    return "e" + std::to_string(e) + " ";
+    if(u == unit() || abs(e) > 24) return "e" + std::to_string(e) + " ";
+    return " " + prefix_names[e];
 }
