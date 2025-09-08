@@ -135,14 +135,8 @@ namespace physics {
     const unit T = WB / (M^2); // Tesla
 
     // Non-SI units
-<<<<<<< HEAD
     const val angstrom = 1e-10 * M; // Ångström
     const val fermi = 1e-15 * M; // Fermi
-=======
-    const val angstrom = 1e-10 * M; // angstromngström
-    const val fermi = 1e-15 * M; // Fermi
-    const val bohr = 0.529'117 * angstrom; // Bohr
->>>>>>> 7509291765a828f6262b8ae979aafdb1a293ebe6
     const val AU = 1.495'978'70e11 * M; // Astronomical unit
     const val lightyear = 6.32e4 * AU; // Light-year
     const val parsec = 3.262 * lightyear; // Parsec
@@ -150,21 +144,12 @@ namespace physics {
     // Constants
     namespace constant {
         const val c_0 = 2.997'924'58e8 * M/S; // Speed of light
-<<<<<<< HEAD
         const val mu_0 = 4 * M_PI * 1e-7 * (V*S)/(A*M); // Permeability
         const val epsilon_0 = (val)1 / (mu_0 * c_0^2); // Permittivity
         const val G = 6.674'08e-11 * (N*(M^2))/(KG^2); // Gravitational constant
         const val g = 9.806'65 * M/S; // Acceleration of gravity at sea level
         const val m_e = 9.109'383'56e-31 * KG; // Electron rest mass
         const val m_mu = 1.883'531'59e-28 * KG; // Muon rest mass
-=======
-        const val m_0 = 4 * M_PI * 1e-7 * (V*S)/(A*M); // Permeability
-        const val e_0 = (val)1 / (m_0 * c_0^2); // Permittivity
-        const val G = 6.674'08e-11 * (N*(M^2))/(KG^2); // Gravitational constant
-        const val g = 9.806'65 * M/S; // Acceleration of gravity at sea level
-        const val m_e = 9.109'383'56e-31 * KG; // Electron rest mass
-        const val m_m = 1.883'531'59e-28 * KG; // Muon rest mass
->>>>>>> 7509291765a828f6262b8ae979aafdb1a293ebe6
         const val m_p = 1.672'621'90e-27 * KG; // Proton rest mass
         const val m_n = 1.674'927'47e-27 * KG; // Neutron rest mass
         const val m_u = 1.660'539'04e-27 * KG; // Atomic mass constant
