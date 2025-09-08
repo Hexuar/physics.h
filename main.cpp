@@ -1,10 +1,12 @@
 #include "physics.h"
-#include "print.h"
 
 
 using namespace physics;
+using namespace constant;
 
-int main() {
+void example_a() {
+    print("\nExample A");
+
     // A 12V battery with two resistors wired in parallel
     val u = 12 * V;
     val r_1 = 10'000 * OHM;
@@ -23,4 +25,16 @@ int main() {
 
     // Print currents
     print(i, i_1, i_2);
+}
+
+void example_b() {
+    print("\nExample B");
+
+    // Calculate the Bohr radius and compare to built-in constant
+    print(a_0, (epsilon_0 * (h^2)) / (M_PI * m_e * (e^2)));
+}
+
+int main() {
+    example_a();
+    example_b();
 }
