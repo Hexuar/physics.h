@@ -67,7 +67,7 @@ val val::operator*(val x) const { return val(v * x.v, e + x.e, u * x.u); }
 val val::operator*(unit x) const { return val(v, e, u * x); }
 val val::operator/(val x) const { return val(v / x.v, e - x.e, u / x.u); }
 val val::operator/(unit x) const { return val(v, e, u / x); }
-val val::operator^(int x) const { return val(pow(v, x), e * x, u ^ x); }
+val val::operator^(double x) const { return val(pow(v, x), e * x, u ^ x); }
 
 bool val::operator<(val x) const { return (e != x.e) ? e < x.e : v < x.v; }
 bool val::operator>(val x) const { return (e != x.e) ? e > x.e : v > x.v; }

@@ -15,10 +15,6 @@ namespace physics {
         val(double v, unit u = unit());
         val(double v, int8_t e, unit u = unit());
 
-        //
-        void calculate_exponent();
-        std::string get_prefix() const;
-
         // Conversions
         operator std::string() const;
         explicit operator int() const;
@@ -34,7 +30,7 @@ namespace physics {
         val operator*(unit x) const;
         val operator/(val x) const;
         val operator/(unit x) const;
-        val operator^(int x) const;
+        val operator^(double x) const;
 
         bool operator<(val x) const;
         bool operator>(val x) const;
@@ -42,6 +38,10 @@ namespace physics {
         bool operator>=(val x) const;
         bool operator==(val x) const;
         bool operator!=(val x) const;
+
+    private:
+        void calculate_exponent();
+        std::string get_prefix() const;
     };
 
     // Additional operators
