@@ -10,6 +10,9 @@ int matrix::rows() const {
 int matrix::cols() const {
     return data[0].size();
 }
+long double matrix::first() const {
+    return data[0][0];
+}
 
 matrix::matrix() {}
 matrix::matrix(long double value) {
@@ -22,21 +25,30 @@ matrix::matrix(std::vector<std::vector<long double>> values) {
     data = values;
 }
 
+std::string matrix::operator+(std::string x) const {
+    return (std::string)*this + x;
+}
 matrix::operator std::string() const {
-    std::string string = "[ ";
+    std::string string;
+    if(rows() > 1) string = "[";
     for(std::vector<long double> row : data) {
-        string += "[ ";
+        if(cols() > 1) string += "[ ";
         for(long double value : row) {
             string += std::to_string(value) + " ";
         }
-        string += "]";
+        string += "\b";
+        if(cols() > 1) string += " ]";
     }
-    string += " ]";
+    if(rows() > 1) string += "]";
     return string;
 }
+matrix::operator int() const { return first(); }
+matrix::operator float() const { return first(); }
+matrix::operator double() const { return first(); }
+matrix::operator long double() const { return first(); }
 
 matrix matrix::operator+(matrix m) const {
-    if(rows() != m.rows() || cols() != m.cols()) throw std::invalid_argument("Incompatible matrices");
+    if(rows() != m.rows() || cols() != m.cols()) throw std::invalid_argument("Incompatible matrices.");
 
     matrix out;
     for(int i = 0; i < data.size(); i++) {
@@ -63,7 +75,8 @@ matrix matrix::operator*(long double x) const {
     return out;
 }
 matrix matrix::operator*(matrix x) const {
-    if(cols() != x.rows()) throw std::invalid_argument("Incompatible matrices");
+    if(x.rows() == 1 && x.cols() == 1) return *this * x.first();
+    if(cols() != x.rows()) throw std::invalid_argument("Incompatible matrices.");
 
     matrix out;
     for(int i = 0; i < data.size(); i++) {
@@ -81,6 +94,10 @@ matrix matrix::operator*(matrix x) const {
 }
 matrix matrix::operator/(long double x) const {
     return *this * (1/x);
+}
+matrix matrix::operator/(matrix m) const {
+    if(m.rows() != 1 || m.cols() != 1) throw std::invalid_argument("Dividing by matrix of size other than 1x1 is undefined.");
+    return *this * (1/m.first());
 }
 
 matrix matrix::operator+=(matrix m) {

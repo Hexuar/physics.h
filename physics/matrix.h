@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <vector>
 
@@ -9,6 +11,7 @@ namespace physics {
     public:
         int rows() const;
         int cols() const;
+        long double first() const;
 
     public:
         matrix();
@@ -16,13 +19,19 @@ namespace physics {
         matrix(std::vector<long double> values);
         matrix(std::vector<std::vector<long double>> values);
 
+        std::string operator+(std::string x) const;
         operator std::string() const;
+        explicit operator int() const;
+        explicit operator float() const;
+        explicit operator double() const;
+        explicit operator long double() const;
 
         matrix operator+(matrix m) const;
         matrix operator-(matrix m) const;
         matrix operator*(long double x) const;
         matrix operator*(matrix m) const;
         matrix operator/(long double x) const;
+        matrix operator/(matrix m) const;
 
         matrix operator+=(matrix m);
         matrix operator-=(matrix m);

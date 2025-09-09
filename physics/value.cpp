@@ -46,6 +46,9 @@ val::val(double v, int8_t e, unit u) {
     calculate_exponent();
 }
 
+std::string val::operator+(std::string x) const {
+    return (std::string)*this + x;
+}
 val::operator std::string() const {
     return std::to_string(v) + get_prefix() + (std::string)u;
 }

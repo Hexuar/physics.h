@@ -16,6 +16,7 @@ namespace physics {
         val(double v, int8_t e, unit u = unit());
 
         // Conversions
+        std::string operator+(std::string x) const;
         operator std::string() const;
         explicit operator int() const;
         explicit operator float() const;
