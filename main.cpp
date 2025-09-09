@@ -2,7 +2,7 @@
 
 
 using namespace physics;
-using namespace constant;
+using namespace constants;
 
 void example_a() {
     print("\nExample A");

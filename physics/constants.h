@@ -5,19 +5,22 @@
 
 
 namespace physics {
+    
     // Non-SI units
-    const val angstrom = 1e-10 * M; // Ångström
-    const val fermi = 1e-15 * M; // Fermi
-    const val AU = 1.495'978'70e11 * M; // Astronomical unit
-    const val lightyear = 6.32e4 * AU; // Light-year
-    const val parsec = 3.262 * lightyear; // Parsec
-    const val barn = 1e-28 * M^2; // Barn
-    const val kcal = 4184 * J; // Kilocalorie
-    const val atm = 1.013'25e5 * PA; // Atmosphere
-    const val D = 3.33564e-30 * C * M; // Debye
-
+    namespace units {
+        const val angstrom = 1e-10 * M; // Ångström
+        const val fermi = 1e-15 * M; // Fermi
+        const val AU = 1.495'978'70e11 * M; // Astronomical unit
+        const val lightyear = 6.32e4 * AU; // Light-year
+        const val parsec = 3.262 * lightyear; // Parsec
+        const val barn = 1e-28 * M^2; // Barn
+        const val kcal = 4184 * J; // Kilocalorie
+        const val atm = 1.013'25e5 * PA; // Atmosphere
+        const val D = 3.33564e-30 * C * M; // Debye
+    }
+    
     // Constants
-    namespace constant {
+    namespace constants {
         const val c_0 = 2.997'924'58e8 * M/S; // Speed of light
         const val mu_0 = 4 * M_PI * 1e-7 * (V*S)/(A*M); // Permeability
         const val epsilon_0 = (val)1 / (mu_0 * (c_0^2)); // Permittivity
