@@ -1,19 +1,20 @@
 #pragma once
 
 #include "unit.h"
+#include "matrix.h"
 
 
 namespace physics {
     // Represents a physical value with dimension.
     class val {
     public:
-        long double v; // Value
+        matrix v; // Value
         int8_t e; // Exponent
         unit u; // Unit
 
     public:
-        val(double v, unit u = unit());
-        val(double v, int8_t e, unit u = unit());
+        val(matrix v, unit u = unit());
+        val(matrix v, int8_t e, unit u = unit());
 
         // Conversions
         std::string operator+(std::string x) const;
@@ -40,6 +41,9 @@ namespace physics {
         bool operator==(val x) const;
         bool operator!=(val x) const;
 
+        // Transpose
+        val T();
+
     private:
         void calculate_exponent();
         std::string get_prefix() const;
@@ -52,8 +56,8 @@ namespace physics {
     val operator/(long double x, val y);
 
     // Conversion operators
-    val operator*(long double x, unit y);
-    val operator/(long double x, unit y);
+    val operator*(matrix x, unit y);
+    val operator/(matrix x, unit y);
     std::string operator+(std::string x, val y);
     std::ostream& operator<<(std::ostream& os, const val& v);
 

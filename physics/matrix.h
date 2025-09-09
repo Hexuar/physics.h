@@ -5,10 +5,10 @@
 
 namespace physics {
 
-    class matrix {
+    struct matrix {
+    public:
         std::vector<std::vector<long double>> data;
 
-    public:
         int rows() const;
         int cols() const;
         long double first() const;
@@ -32,6 +32,7 @@ namespace physics {
         matrix operator*(matrix m) const;
         matrix operator/(long double x) const;
         matrix operator/(matrix m) const;
+        matrix operator^(double) const;
 
         matrix operator+=(matrix m);
         matrix operator-=(matrix m);
@@ -50,5 +51,7 @@ namespace physics {
 
     std::string operator+(std::string x, matrix m);
     std::ostream& operator<<(std::ostream &os, const matrix &m);
+
+    matrix abs(matrix m);
 
 }

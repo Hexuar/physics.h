@@ -52,8 +52,28 @@ void example_c() {
     print(a_0, (epsilon_0 * (h^2)) / (M_PI * m_e * (e^2)));
 }
 
+void example_d() {
+    print("\nExample D");
+
+    val v = matrix({4,2}) * M/S; // Values are matrices, and can be initialised as such.
+    val m = 10 * KG;
+    val p = m * v;
+    print(p);
+
+    val F = matrix({2,4}) * N;
+    val r = matrix({3,-1}) * M;
+    val W = F * r.T();
+    print(W);
+
+    val I = matrix({{1,2,3},{4,5,6},{7,8,9}}) * KG * (M^2);
+    val omega = matrix({0.5,2.4,1.0}) * (S^-1);
+    val L = I * omega.T();
+    print(L);
+}
+
 int main() {
     example_a();
     example_b();
     example_c();
+    example_d();
 }

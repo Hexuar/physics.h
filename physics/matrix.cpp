@@ -1,6 +1,8 @@
 #include "matrix.h"
 #include <iostream>
 #include <stdexcept>
+#include <math.h>
+
 
 using namespace physics;
 
@@ -30,22 +32,30 @@ std::string matrix::operator+(std::string x) const {
 }
 matrix::operator std::string() const {
     std::string string;
-    if(rows() > 1) string = "[";
+    if(rows() > 1) string = "[ ";
     for(std::vector<long double> row : data) {
         if(cols() > 1) string += "[ ";
         for(long double value : row) {
             string += std::to_string(value) + " ";
         }
-        string += "\b";
         if(cols() > 1) string += " ]";
     }
-    if(rows() > 1) string += "]";
+    if(rows() > 1) string += " ]";
     return string;
 }
-matrix::operator int() const { return first(); }
-matrix::operator float() const { return first(); }
-matrix::operator double() const { return first(); }
-matrix::operator long double() const { return first(); }
+matrix::operator int() const {
+    return (long double)*this;
+}
+matrix::operator float() const {
+    return (long double)*this;
+}
+matrix::operator double() const {
+    return (long double)*this;
+}
+matrix::operator long double() const {
+    if(rows() != 1 || cols() != 1) throw std::invalid_argument("Only 1x1 matrices can be converted to scalar values.");
+    return first();
+}
 
 matrix matrix::operator+(matrix m) const {
     if(rows() != m.rows() || cols() != m.cols()) throw std::invalid_argument("Incompatible matrices.");
@@ -76,19 +86,18 @@ matrix matrix::operator*(long double x) const {
 }
 matrix matrix::operator*(matrix x) const {
     if(x.rows() == 1 && x.cols() == 1) return *this * x.first();
+    if(rows() == 1 && cols() == 1) return first() * x;
     if(cols() != x.rows()) throw std::invalid_argument("Incompatible matrices.");
 
-    matrix out;
-    for(int i = 0; i < data.size(); i++) {
-        std::vector<long double> newRow;
-        for(int j = 0; j < data.size(); j++) {
+    matrix out = matrix(std::vector<std::vector<long double>>(rows(), std::vector<long double>(x.cols())));
+    for(int i = 0; i < rows(); i++) {
+        for(int j = 0; j < cols(); j++) {
             long double sum = 0;
-            for(int k = 0; k < data[0].size(); k++) {
-                sum += data[j][k] * x.T().data[i][k];
+            for(int k = 0; k < rows(); k++) {
+                sum += data[i][k] * x.data[k][j];
             }
-            newRow.push_back(sum);
+            out.data[i][j] = sum;
         }
-        out.data.push_back(newRow);
     }
     return out.T();
 }
@@ -99,6 +108,11 @@ matrix matrix::operator/(matrix m) const {
     if(m.rows() != 1 || m.cols() != 1) throw std::invalid_argument("Dividing by matrix of size other than 1x1 is undefined.");
     return *this * (1/m.first());
 }
+matrix matrix::operator^(double x) const {
+    if(rows() != 1 || cols() != 1) throw std::invalid_argument("Exponentiation only possible for 1x1 matrices");
+    return pow((long double)*this,x);
+}
+
 
 matrix matrix::operator+=(matrix m) {
     *this = *this + m;
@@ -156,4 +170,16 @@ std::string physics::operator+(std::string x, matrix m) {
 std::ostream& physics::operator<<(std::ostream &os, const matrix &m) {
     os << (std::string)m;
     return os;
+}
+
+matrix physics::abs(matrix m) {
+    matrix out;
+    for(std::vector<long double> row : m.data) {
+        std::vector<long double> newRow;
+        for(long double value : row) {
+            newRow.push_back(std::abs(value));
+        }
+        out.data.push_back(newRow);
+    }
+    return out;
 }
