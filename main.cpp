@@ -1,5 +1,4 @@
 #include "physics.h"
-#include "physics/constants.h"
 
 
 using namespace physics;
