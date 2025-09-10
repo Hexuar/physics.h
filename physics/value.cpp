@@ -1,10 +1,6 @@
 #include "value.h"
-#include "unit.h"
-#include <cstdlib>
 #include <map>
-#include <cstdint>
 #include <stdexcept>
-#include <string>
 #include <math.h>
 
 

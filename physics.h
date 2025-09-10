@@ -67,7 +67,6 @@ namespace physics {
 // end --- matrix.h --- 
 
 
-#include <iostream>
 #include <stdexcept>
 #include <math.h>
 
@@ -419,11 +418,8 @@ namespace physics {
 // end --- value.h --- 
 
 
-#include <cstdlib>
 #include <map>
-#include <cstdint>
 #include <stdexcept>
-#include <string>
 #include <math.h>
 
 
@@ -592,7 +588,6 @@ inline std::string physics::val::get_prefix() const {
 // begin --- unit.cpp --- 
 
 
-#include <map>
 
 // begin --- superscript.h --- 
 
