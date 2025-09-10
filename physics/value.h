@@ -13,6 +13,8 @@ namespace physics {
         unit u; // Unit
 
     public:
+        val(long double v);
+        val(matrix v);
         val(matrix v, unit u = unit());
         val(matrix v, int8_t e, unit u = unit());
 

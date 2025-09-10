@@ -33,6 +33,16 @@ std::map<int8_t, std::string> prefix_names {
     {-24, "y"},
 };
 
+val::val(long double v) {
+    this->v = matrix(v);
+    this->e = 0;
+    this->u = unit();
+}
+val::val(matrix v) {
+    this->v = v;
+    this->e = 0;
+    this->u = unit();
+}
 val::val(matrix v, unit u) {
     this->v = v;
     this->e = 0;
