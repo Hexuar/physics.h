@@ -29,7 +29,7 @@ namespace physics {
 
         // Gravitation
         const val G = 6.674'08e-11 * (N*(M^2))/(KG^2); // Gravitational constant
-        const val g = 9.806'65 * M/S; // Acceleration of gravity at sea level
+        const val g = 9.806'65 * M/(S^2); // Acceleration of gravity at sea level
 
         // Particle Masses
         const val m_e = 9.109'383'56e-31 * KG; // Electron rest mass
