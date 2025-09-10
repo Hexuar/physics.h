@@ -6,30 +6,22 @@
 
 using namespace physics;
 
-int matrix::rows() const {
-    return data.size();
-}
-int matrix::cols() const {
-    return data[0].size();
-}
-long double matrix::first() const {
-    return data[0][0];
-}
+
+int matrix::rows() const { return data.size(); }
+int matrix::cols() const { return data[0].size(); }
+long double matrix::first() const { return data[0][0]; }
+
 
 matrix::matrix() {}
-matrix::matrix(long double value) {
-    data.push_back({value});
-}
-matrix::matrix(std::vector<long double> values) {
-    data.push_back({values});
-}
-matrix::matrix(std::vector<std::vector<long double>> values) {
-    data = values;
-}
+matrix::matrix(long double value) { data.push_back({value}); }
+matrix::matrix(std::vector<long double> values) { data.push_back({values}); }
+matrix::matrix(std::vector<std::vector<long double>> values) { data = values; }
+
 
 std::string matrix::operator+(std::string x) const {
     return (std::string)*this + x;
 }
+
 matrix::operator std::string() const {
     std::string string;
     if(rows() > 1) string = "[";
@@ -43,15 +35,10 @@ matrix::operator std::string() const {
     if(rows() > 1) string += "]";
     return string;
 }
-matrix::operator int() const {
-    return (long double)*this;
-}
-matrix::operator float() const {
-    return (long double)*this;
-}
-matrix::operator double() const {
-    return (long double)*this;
-}
+
+matrix::operator int() const { return (long double)*this; }
+matrix::operator float() const { return (long double)*this; }
+matrix::operator double() const { return (long double)*this; }
 matrix::operator long double() const {
     if(rows() != 1 || cols() != 1) throw std::invalid_argument("Only 1x1 matrices can be converted to scalar values.");
     return first();
@@ -70,9 +57,11 @@ matrix matrix::operator+(matrix m) const {
     }
     return out;
 }
+
 matrix matrix::operator-(matrix m) const {
     return *this + -1 * m;
 }
+
 matrix matrix::operator*(long double x) const {
     matrix out;
     for(std::vector<long double> row : data) {
@@ -84,9 +73,15 @@ matrix matrix::operator*(long double x) const {
     }
     return out;
 }
+
 matrix matrix::operator*(matrix x) const {
+    // Multiplication by 1x1 matrix should be regarded as scalar multiplication
     if(x.rows() == 1 && x.cols() == 1) return *this * x.first();
     if(rows() == 1 && cols() == 1) return first() * x;
+
+    // Automatically transpose vectors
+    if((x.rows() == 1 || x.cols() == 1) && cols() != x.rows()) x = x.T();
+
     if(cols() != x.rows()) throw std::invalid_argument("Incompatible matrices.");
 
     matrix out;
@@ -103,13 +98,16 @@ matrix matrix::operator*(matrix x) const {
     }
     return out.T();
 }
+
 matrix matrix::operator/(long double x) const {
     return *this * (1/x);
 }
+
 matrix matrix::operator/(matrix m) const {
     if(m.rows() != 1 || m.cols() != 1) throw std::invalid_argument("Dividing by matrix of size other than 1x1 is undefined.");
     return *this * (1/m.first());
 }
+
 matrix matrix::operator^(double x) const {
     if(rows() != 1 || cols() != 1) throw std::invalid_argument("Exponentiation only possible for 1x1 matrices");
     return pow((long double)*this,x);
@@ -120,22 +118,27 @@ matrix matrix::operator+=(matrix m) {
     *this = *this + m;
     return *this;
 }
+
 matrix matrix::operator-=(matrix m) {
     *this = *this - m;
     return *this;
 }
+
 matrix matrix::operator*=(long double x) {
     *this = *this * x;
     return *this;
 }
+
 matrix matrix::operator*=(matrix m) {
     *this = *this * m;
     return *this;
 }
+
 matrix matrix::operator/=(long double x) {
     *this = *this / x;
     return *this;
 }
+
 
 bool matrix::operator==(matrix x) const {
     if(rows() != x.rows() || cols() != x.cols()) return false;
@@ -146,9 +149,11 @@ bool matrix::operator==(matrix x) const {
     }
     return true;
 }
+
 bool matrix::operator!=(matrix x) const {
     return !(*this == x);
 }
+
 
 matrix matrix::T() {
     matrix out;
@@ -161,6 +166,7 @@ matrix matrix::T() {
     }
     return out;
 }
+
 
 matrix physics::operator*(long double x, matrix m) {
     return m * x;

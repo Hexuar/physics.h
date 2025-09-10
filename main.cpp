@@ -56,8 +56,8 @@ void example_d() {
     print("\nExample D");
 
     val I = matrix({{1,2,3},{4,5,6},{7,8,9}}) * KG * (M^2); // Values are matrices, and can be initialised as such.
-    val omega = matrix({0.5,2.4,1.0}) * (S^-1); // Vectors are defined as 1xN matrices
-    val L = I * omega.T(); // Vectors may need to be transposed for matrix multiplication
+    val omega = matrix({0.5,2.4,1.0}) * (S^-1); // Vectors are defined as 1xN or Nx1 matrices
+    val L = I * omega; // Vectors are automatically transposed in matrix multiplication
     print(L);
 
     val v = matrix({4,2}) * M/S;
@@ -67,7 +67,7 @@ void example_d() {
 
     val F = matrix({2,4}) * N;
     val r = matrix({3,-1}) * M;
-    val W = F * r.T();
+    val W = F * r;
     print(W);
 }
 
