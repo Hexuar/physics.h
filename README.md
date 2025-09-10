@@ -1,5 +1,5 @@
 # Physics.h
-Physics.h is a simple physics library introducing the "val" class, which represents a scalar, vector or matrix with a unit. For your convenience, the library is packaged in a single header. Simply include this and you're good to go.
+Physics.h is a simple physics library introducing the **val** class, which represents a scalar, vector or matrix with a unit. For your convenience, the library is packaged in a single header. Simply include this and you're good to go.
 
 ## Usage
 While physics values can be created with their constructor, you can also define them by multiplying a value with a unit. The entire library is under the **physics** namespace, and constants, as well as non SI units are under the **constants** and **units** namespaces respectively.
@@ -28,3 +28,5 @@ val L = I * omega; // Vectors are automatically transposed in matrix multiplicat
 
 print(L);
 ```
+
+These examples, and more, can be found in the _main.cpp_ file.
