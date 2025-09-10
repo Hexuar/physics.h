@@ -3,33 +3,31 @@
 #include "superscript.h"
 
 
-using namespace physics;
-
-std::string si_strings[7] = {"m","kg","s","A","K","cd","mol"};
-std::map<unit, std::string> si_special_names {
-    { HZ, "Hz" },
-    { N, "N" },
-    { J, "J" },
-    { W, "W" },
-    { PA, "Pa" },
-    { V, "V" },
-    { C, "C" },
-    { OHM, "Ω" },
-    { F, "F" },
-    { H, "H" },
-    { SIEMENS, "S" },
-    { WB, "Wb" },
-    { T, "T" }
+inline std::string si_strings[7] = {"m","kg","s","A","K","cd","mol"};
+inline std::map<physics::unit, std::string> si_special_names {
+    { physics::HZ, "Hz" },
+    { physics::N, "N" },
+    { physics::J, "J" },
+    { physics::W, "W" },
+    { physics::PA, "Pa" },
+    { physics::V, "V" },
+    { physics::C, "C" },
+    { physics::OHM, "Ω" },
+    { physics::F, "F" },
+    { physics::H, "H" },
+    { physics::SIEMENS, "S" },
+    { physics::WB, "Wb" },
+    { physics::T, "T" }
 };
 
-unit::unit(std::vector<int8_t> si_units) {
+inline physics::unit::unit(std::vector<int8_t> si_units) {
     int size = si_units.size();
     for(int i = 0; i < std::min(7, size); i++) {
         si[i] = si_units[i];
     }
 }
 
-unit::operator std::string() const {
+inline physics::unit::operator std::string() const {
     // Returns special character if present in map
     std::string output = si_special_names[*this];
     if(output != "") {
@@ -48,11 +46,11 @@ unit::operator std::string() const {
     }
     return output;
 }
-unit::operator std::vector<int8_t>() const {
+inline physics::unit::operator std::vector<int8_t>() const {
     return std::vector<int8_t>(std::begin(this->si), std::end(this->si));
 }
 
-unit unit::operator*(unit x) const {
+inline physics::unit physics::unit::operator*(unit x) const {
     std::vector<int8_t> si_units;
 
     for(int i = 0; i < 7; i++) {
@@ -61,7 +59,7 @@ unit unit::operator*(unit x) const {
 
     return unit(si_units);
 }
-unit unit::operator/(unit x) const {
+inline physics::unit physics::unit::operator/(unit x) const {
     std::vector<int8_t> si_units;
 
     for(int i = 0; i < 7; i++) {
@@ -70,7 +68,7 @@ unit unit::operator/(unit x) const {
 
     return unit(si_units);
 }
-unit unit::operator^(int x) const {
+inline physics::unit physics::unit::operator^(int x) const {
     std::vector<int8_t> si_units;
 
     for(int i = 0; i < 7; i++) {
@@ -80,17 +78,17 @@ unit unit::operator^(int x) const {
     return unit(si_units);
 }
 
-bool unit::operator<(unit x) const {
+inline bool physics::unit::operator<(unit x) const {
     return (std::vector<int8_t>)*this < (std::vector<int8_t>)x;
 }
-bool unit::operator==(unit x) const {
+inline bool physics::unit::operator==(unit x) const {
     return (std::vector<int8_t>)*this == (std::vector<int8_t>)x;
 }
-bool unit::operator!=(unit x) const {
+inline bool physics::unit::operator!=(unit x) const {
     return (std::vector<int8_t>)*this != (std::vector<int8_t>)x;
 }
 
-std::ostream& physics::operator<<(std::ostream& os, const unit& u) {
+inline std::ostream& physics::operator<<(std::ostream& os, const unit& u) {
     os << (std::string)u;
     return os;
 }

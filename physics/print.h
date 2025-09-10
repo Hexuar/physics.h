@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-void print() {
+inline void print() {
     std::cout << std::endl;
 };
 

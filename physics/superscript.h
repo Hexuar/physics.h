@@ -5,7 +5,7 @@
 
 
 namespace super {
-    std::map<char, std::string> supertable {
+    inline std::map<char, std::string> supertable {
         {'0', "\u2070"},
         {'1', "\u00b9"},
         {'2', "\u00b2"},
@@ -21,10 +21,10 @@ namespace super {
     };
 
     // Returns a string of exponent characters corresponding to the input char or int.
-    std::string super(char c) {
+    inline std::string super(char c) {
         return supertable[c];
     }
-    std::string super(int n) {
+    inline std::string super(int n) {
         std::string out;
         if(n < 0) {
             out += "\u207B";
