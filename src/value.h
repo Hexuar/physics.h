@@ -66,6 +66,9 @@ namespace physics {
     std::string operator+(std::string x, val y);
     std::ostream& operator<<(std::ostream& os, const val& v);
 
+    val abs(val v);
+    val cross(val v1, val v2);
+
     // Suffixes
     val operator ""_Y(long double); // Yotta
     val operator ""_Z(long double); // Zetta

@@ -65,10 +65,10 @@ void example_d() {
     val p = m * v;
     print(p);
 
-    val F = matrix({2,4}) * N;
-    val r = matrix({3,-1}) * M;
-    val W = F * r;
-    print(W);
+    val F = matrix({2,4,6}) * N;
+    val r = matrix({3,-1,0.5}) * M;
+    val M = cross(r, F); // Use cross() for the cross product of 3D vectors
+    print(M);
 }
 
 int main() {

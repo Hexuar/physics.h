@@ -1,4 +1,6 @@
 #include "value.h"
+#include "matrix.h"
+#include <cstdint>
 #include <map>
 #include <stdexcept>
 #include <math.h>
@@ -111,6 +113,9 @@ inline std::ostream& physics::operator<<(std::ostream &os, const val &v) {
     return os;
 }
 
+inline physics::val physics::abs(physics::val v) { return val(abs(v.v), v.e, v.u); }
+inline physics::val physics::cross(val v1, val v2) { return val(cross(v1.v, v2.v), v1.e + v2.e, v1.u * v2.u); }
+
 inline physics::val physics::operator""_Y(long double v) { return val(v, 24); }
 inline physics::val physics::operator""_Z(long double v) { return val(v, 21); }
 inline physics::val physics::operator""_E(long double v) { return val(v, 18); }
@@ -168,6 +173,6 @@ inline std::string physics::val::get_prefix() const {
     if(e == 0) {
         return u == unit() ? "" : " ";
     };
-    if(u == unit() || (long double)abs(e) > 24) return "e" + std::to_string(e) + " ";
+    if(u == unit() || (long double)std::abs(e) > 24) return "e" + std::to_string(e) + " ";
     return " " + prefix_names[e];
 }

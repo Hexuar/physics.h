@@ -20,6 +20,10 @@ namespace physics {
         int rows() const;
         int cols() const;
         long double first() const;
+        int size() const;
+
+        bool is_scalar() const;
+        bool is_vector() const;
 
     public:
         matrix();
@@ -52,7 +56,7 @@ namespace physics {
         bool operator!=(matrix m) const;
 
         // Transpose
-        matrix T();
+        matrix T() const;
     };
 
     matrix operator*(long double x, matrix m);
@@ -61,7 +65,7 @@ namespace physics {
     std::ostream& operator<<(std::ostream &os, const matrix &m);
 
     matrix abs(matrix m);
-
+    matrix cross(matrix m1, matrix m2);
 }
 
 // end --- matrix.h --- 
@@ -74,6 +78,10 @@ namespace physics {
 inline int physics::matrix::rows() const { return data.size(); }
 inline int physics::matrix::cols() const { return data[0].size(); }
 inline long double physics::matrix::first() const { return data[0][0]; }
+inline int physics::matrix::size() const { return data.size() * data[0].size(); }
+
+inline bool physics::matrix::is_scalar() const { return rows() == 1 && cols() == 1; }
+inline bool physics::matrix::is_vector() const { return rows() == 1 || cols() == 1; }
 
 
 inline physics::matrix::matrix() {}
@@ -220,7 +228,7 @@ inline bool physics::matrix::operator!=(matrix x) const {
 }
 
 
-inline physics::matrix physics::matrix::T() {
+inline physics::matrix physics::matrix::T() const {
     matrix out;
     for(int i = 0; i < data[0].size(); i++) {
         std::vector<long double> newRow;
@@ -255,6 +263,21 @@ inline physics::matrix physics::abs(matrix m) {
         out.data.push_back(newRow);
     }
     return out;
+}
+
+inline physics::matrix physics::cross(matrix m1, matrix m2) {
+    if(!m1.is_vector() || !m2.is_vector()) throw std::invalid_argument("Cross product only possible for 3D vectors");
+    if(m1.size() != 3 || m2.size() != 3) throw std::invalid_argument("Cross product only possible for 3D vectors");
+
+    std::vector<long double> result(3);
+    std::vector<long double> a = m1.rows() == 1 ? m1.data[0] : m1.T().data[0];
+    std::vector<long double> b = m2.rows() == 1 ? m2.data[0] : m2.T().data[0];
+
+    result[0] = a[1] * b[2] - a[2] * b[1];
+    result[1] = a[2] * b[0] - a[0] * b[2];
+    result[2] = a[0] * b[1] - a[1] * b[0];
+
+    return matrix(result);
 }
 
 // end --- matrix.cpp --- 
@@ -394,6 +417,9 @@ namespace physics {
     std::string operator+(std::string x, val y);
     std::ostream& operator<<(std::ostream& os, const val& v);
 
+    val abs(val v);
+    val cross(val v1, val v2);
+
     // Suffixes
     val operator ""_Y(long double); // Yotta
     val operator ""_Z(long double); // Zetta
@@ -422,6 +448,7 @@ namespace physics {
 // end --- value.h --- 
 
 
+#include <cstdint>
 #include <map>
 #include <stdexcept>
 #include <math.h>
@@ -534,6 +561,9 @@ inline std::ostream& physics::operator<<(std::ostream &os, const val &v) {
     return os;
 }
 
+inline physics::val physics::abs(physics::val v) { return val(abs(v.v), v.e, v.u); }
+inline physics::val physics::cross(val v1, val v2) { return val(cross(v1.v, v2.v), v1.e + v2.e, v1.u * v2.u); }
+
 inline physics::val physics::operator""_Y(long double v) { return val(v, 24); }
 inline physics::val physics::operator""_Z(long double v) { return val(v, 21); }
 inline physics::val physics::operator""_E(long double v) { return val(v, 18); }
@@ -591,7 +621,7 @@ inline std::string physics::val::get_prefix() const {
     if(e == 0) {
         return u == unit() ? "" : " ";
     };
-    if(u == unit() || (long double)abs(e) > 24) return "e" + std::to_string(e) + " ";
+    if(u == unit() || (long double)std::abs(e) > 24) return "e" + std::to_string(e) + " ";
     return " " + prefix_names[e];
 }
 

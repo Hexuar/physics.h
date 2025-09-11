@@ -12,6 +12,10 @@ namespace physics {
         int rows() const;
         int cols() const;
         long double first() const;
+        int size() const;
+
+        bool is_scalar() const;
+        bool is_vector() const;
 
     public:
         matrix();
@@ -44,7 +48,7 @@ namespace physics {
         bool operator!=(matrix m) const;
 
         // Transpose
-        matrix T();
+        matrix T() const;
     };
 
     matrix operator*(long double x, matrix m);
@@ -53,5 +57,5 @@ namespace physics {
     std::ostream& operator<<(std::ostream &os, const matrix &m);
 
     matrix abs(matrix m);
-
+    matrix cross(matrix m1, matrix m2);
 }

@@ -6,6 +6,10 @@
 inline int physics::matrix::rows() const { return data.size(); }
 inline int physics::matrix::cols() const { return data[0].size(); }
 inline long double physics::matrix::first() const { return data[0][0]; }
+inline int physics::matrix::size() const { return data.size() * data[0].size(); }
+
+inline bool physics::matrix::is_scalar() const { return rows() == 1 && cols() == 1; }
+inline bool physics::matrix::is_vector() const { return rows() == 1 || cols() == 1; }
 
 
 inline physics::matrix::matrix() {}
@@ -152,7 +156,7 @@ inline bool physics::matrix::operator!=(matrix x) const {
 }
 
 
-inline physics::matrix physics::matrix::T() {
+inline physics::matrix physics::matrix::T() const {
     matrix out;
     for(int i = 0; i < data[0].size(); i++) {
         std::vector<long double> newRow;
@@ -187,4 +191,19 @@ inline physics::matrix physics::abs(matrix m) {
         out.data.push_back(newRow);
     }
     return out;
+}
+
+inline physics::matrix physics::cross(matrix m1, matrix m2) {
+    if(!m1.is_vector() || !m2.is_vector()) throw std::invalid_argument("Cross product only possible for 3D vectors");
+    if(m1.size() != 3 || m2.size() != 3) throw std::invalid_argument("Cross product only possible for 3D vectors");
+
+    std::vector<long double> result(3);
+    std::vector<long double> a = m1.rows() == 1 ? m1.data[0] : m1.T().data[0];
+    std::vector<long double> b = m2.rows() == 1 ? m2.data[0] : m2.T().data[0];
+
+    result[0] = a[1] * b[2] - a[2] * b[1];
+    result[1] = a[2] * b[0] - a[0] * b[2];
+    result[2] = a[0] * b[1] - a[1] * b[0];
+
+    return matrix(result);
 }
