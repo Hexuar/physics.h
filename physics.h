@@ -176,12 +176,12 @@ inline physics::matrix physics::matrix::operator/(long double x) const {
 }
 
 inline physics::matrix physics::matrix::operator/(matrix m) const {
-    if(m.rows() != 1 || m.cols() != 1) throw std::invalid_argument("Dividing by matrix of size other than 1x1 is undefined.");
+    if(!m.is_scalar()) throw std::invalid_argument("Dividing by matrix of size other than 1x1 is undefined.");
     return *this * (1/m.first());
 }
 
 inline physics::matrix physics::matrix::operator^(double x) const {
-    if(rows() != 1 || cols() != 1) throw std::invalid_argument("Exponentiation only possible for 1x1 matrices");
+    if(!is_scalar()) throw std::invalid_argument("Exponentiation only possible for 1x1 matrices");
     return pow((long double)*this,x);
 }
 
@@ -213,12 +213,16 @@ inline physics::matrix physics::matrix::operator/=(long double x) {
 
 
 inline bool physics::matrix::operator==(matrix x) const {
+    // Size check
     if(rows() != x.rows() || cols() != x.cols()) return false;
+
+    // Value check
     for(int i = 0; i < data.size(); i++) {
         for(int j = 0; j < data.size(); j++) {
             if(data[i][j] != x.data[i][j]) return false;
         }
     }
+
     return true;
 }
 
