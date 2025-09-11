@@ -77,6 +77,7 @@ inline physics::matrix physics::matrix::operator*(matrix x) const {
 
     // Automatically transpose vectors
     if((x.rows() == 1 || x.cols() == 1) && cols() != x.rows()) x = x.T();
+    if(rows() == 1 && x.rows() == 1) x = x.T();
 
     if(cols() != x.rows()) throw std::invalid_argument("Incompatible matrices.");
 
@@ -85,7 +86,7 @@ inline physics::matrix physics::matrix::operator*(matrix x) const {
         std::vector<long double> newRow;
         for(int j = 0; j < x.cols(); j++) {
             long double sum = 0;
-            for(int k = 0; k < rows(); k++) {
+            for(int k = 0; k < cols(); k++) {
                 sum += data[i][k] * x.data[k][j];
             }
             newRow.push_back(sum);

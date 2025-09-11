@@ -78,6 +78,15 @@ inline physics::val physics::val::operator/(val x) const { return val(v / x.v, e
 inline physics::val physics::val::operator/(unit x) const { return val(v, e, u / x); }
 inline physics::val physics::val::operator^(double x) const { return val(v^x, e * x, u ^ x); }
 
+inline physics::val physics::val::operator+=(val x) {
+    *this = *this + x;
+    return *this;
+}
+inline physics::val physics::val::operator-=(val x) {
+    *this = *this - x;
+    return *this;
+}
+
 inline bool physics::val::operator<(val x) const { return (e != x.e) ? e < x.e : (long double)v < (long double)x.v; }
 inline bool physics::val::operator>(val x) const { return (e != x.e) ? e > x.e : (long double)v > (long double)x.v; }
 inline bool physics::val::operator<=(val x) const { return (e != x.e) ? e <= x.e : (long double)v <= (long double)x.v; }
@@ -125,6 +134,7 @@ inline physics::val physics::operator""_y(long double v) { return val(v, -24); }
 
 inline void physics::val::calculate_exponent() {
     if(v.rows() != 1 || v.cols() != 1) {
+        v *= pow(10,e);
         e = 0;
         return;
     }

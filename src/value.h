@@ -36,6 +36,9 @@ namespace physics {
         val operator/(unit x) const;
         val operator^(double x) const;
 
+        val operator+=(val x);
+        val operator-=(val x);
+
         bool operator<(val x) const;
         bool operator>(val x) const;
         bool operator<=(val x) const;

@@ -145,6 +145,7 @@ inline physics::matrix physics::matrix::operator*(matrix x) const {
 
     // Automatically transpose vectors
     if((x.rows() == 1 || x.cols() == 1) && cols() != x.rows()) x = x.T();
+    if(rows() == 1 && x.rows() == 1) x = x.T();
 
     if(cols() != x.rows()) throw std::invalid_argument("Incompatible matrices.");
 
@@ -153,7 +154,7 @@ inline physics::matrix physics::matrix::operator*(matrix x) const {
         std::vector<long double> newRow;
         for(int j = 0; j < x.cols(); j++) {
             long double sum = 0;
-            for(int k = 0; k < rows(); k++) {
+            for(int k = 0; k < cols(); k++) {
                 sum += data[i][k] * x.data[k][j];
             }
             newRow.push_back(sum);
@@ -363,6 +364,9 @@ namespace physics {
         val operator/(unit x) const;
         val operator^(double x) const;
 
+        val operator+=(val x);
+        val operator-=(val x);
+
         bool operator<(val x) const;
         bool operator>(val x) const;
         bool operator<=(val x) const;
@@ -497,6 +501,15 @@ inline physics::val physics::val::operator/(val x) const { return val(v / x.v, e
 inline physics::val physics::val::operator/(unit x) const { return val(v, e, u / x); }
 inline physics::val physics::val::operator^(double x) const { return val(v^x, e * x, u ^ x); }
 
+inline physics::val physics::val::operator+=(val x) {
+    *this = *this + x;
+    return *this;
+}
+inline physics::val physics::val::operator-=(val x) {
+    *this = *this - x;
+    return *this;
+}
+
 inline bool physics::val::operator<(val x) const { return (e != x.e) ? e < x.e : (long double)v < (long double)x.v; }
 inline bool physics::val::operator>(val x) const { return (e != x.e) ? e > x.e : (long double)v > (long double)x.v; }
 inline bool physics::val::operator<=(val x) const { return (e != x.e) ? e <= x.e : (long double)v <= (long double)x.v; }
@@ -544,6 +557,7 @@ inline physics::val physics::operator""_y(long double v) { return val(v, -24); }
 
 inline void physics::val::calculate_exponent() {
     if(v.rows() != 1 || v.cols() != 1) {
+        v *= pow(10,e);
         e = 0;
         return;
     }
@@ -762,19 +776,39 @@ namespace physics {
 
 
 namespace physics {
+    // Source: Physics Handbook by Carl Nordling & Jonny Österman, Studentlitteratur 2020.
 
     // Non-SI units
     namespace units {
+        // Length
         const val angstrom = 1e-10 * M; // Ångström
+        const val XU = 1.002'08e-13 * M; // X-unit
         const val fermi = 1e-15 * M; // Fermi
         const val AU = 1.495'978'70e11 * M; // Astronomical unit
-        const val lightyear = 6.32e4 * AU; // Light-year
-        const val parsec = 3.262 * lightyear; // Parsec
+        const val lightyear = 9.460'55e15 * M; // Light-year
+        const val parsec = 3.0857e16 * M; // Parsec
+
+        // Area
         const val barn = 1e-28 * M^2; // Barn
-        const val kcal = 4184 * J; // Kilocalorie
-        const val atm = 1.013'25e5 * PA; // Atmosphere
-        const val D = 3.33564e-30 * C * M; // Debye
+
+        // Time
+        const val tropical_year = 31.556'925'974e6 * S; // Tropical year (solar year)
+        const val sidereal_year = 31.558'150e6 * S; // Sidereal year (stellar year)
+        const val calender_year = 31.536e6 * S; // Calender year
+        const val leap_year = 31.6224e6 * S; // Leap year
+
+        // Speed
+        const val kmph = 1/3.6 * M/S; // Kilometers per hour
+
+        // Energy
         const val eV = 1.602'176'634e-19 * J; // Electron volt
+        const val kcal = 4184 * J; // Kilocalorie
+
+        // Pressure
+        const val atm = 1.013'25e5 * PA; // Atmosphere
+
+        // Other
+        const val D = 3.33564e-30 * C * M; // Debye
     }
 
     // Constants
