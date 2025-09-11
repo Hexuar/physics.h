@@ -112,7 +112,7 @@ inline physics::matrix::operator int() const { return (long double)*this; }
 inline physics::matrix::operator float() const { return (long double)*this; }
 inline physics::matrix::operator double() const { return (long double)*this; }
 inline physics::matrix::operator long double() const {
-    if(rows() != 1 || cols() != 1) throw std::invalid_argument("Only 1x1 matrices can be converted to scalar values.");
+    if(!is_scalar()) throw std::invalid_argument("Only 1x1 matrices can be converted to scalar values.");
     return first();
 }
 
@@ -148,12 +148,11 @@ inline physics::matrix physics::matrix::operator*(long double x) const {
 
 inline physics::matrix physics::matrix::operator*(matrix x) const {
     // Multiplication by 1x1 matrix should be regarded as scalar multiplication
-    if(x.rows() == 1 && x.cols() == 1) return *this * x.first();
-    if(rows() == 1 && cols() == 1) return first() * x;
+    if(x.is_scalar()) return *this * x.first();
+    if(is_scalar()) return first() * x;
 
     // Automatically transpose vectors
-    if((x.rows() == 1 || x.cols() == 1) && cols() != x.rows()) x = x.T();
-    if(rows() == 1 && x.rows() == 1) x = x.T();
+    if(x.is_vector() && cols() != x.rows()) x = x.T();
 
     if(cols() != x.rows()) throw std::invalid_argument("Incompatible matrices.");
 
