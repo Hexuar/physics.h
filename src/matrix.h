@@ -16,6 +16,7 @@ namespace physics {
 
         bool is_scalar() const;
         bool is_vector() const;
+        bool is_square() const;
 
     public:
         matrix();

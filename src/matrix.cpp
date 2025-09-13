@@ -10,6 +10,7 @@ inline int physics::matrix::size() const { return data.size() * data[0].size(); 
 
 inline bool physics::matrix::is_scalar() const { return rows() == 1 && cols() == 1; }
 inline bool physics::matrix::is_vector() const { return rows() == 1 || cols() == 1; }
+inline bool physics::matrix::is_square() const { return rows() == cols(); }
 
 
 inline physics::matrix::matrix() {}
@@ -109,8 +110,14 @@ inline physics::matrix physics::matrix::operator/(matrix m) const {
 }
 
 inline physics::matrix physics::matrix::operator^(double x) const {
-    if(!is_scalar()) throw std::invalid_argument("Exponentiation only possible for 1x1 matrices");
-    return pow((long double)*this,x);
+    if(is_scalar()) return pow(first(), x);
+    if(!is_square()) throw std::invalid_argument("Exponentiation only possible for square matrices");
+
+    matrix out = *this;
+    for(int i = 0; i < x-1; i++) {
+        out *= *this;
+    }
+    return out;
 }
 
 
@@ -197,8 +204,7 @@ inline physics::matrix physics::abs(matrix m) {
 }
 
 inline physics::matrix physics::cross(matrix m1, matrix m2) {
-    if(!m1.is_vector() || !m2.is_vector()) throw std::invalid_argument("Cross product only possible for 3D vectors");
-    if(m1.size() != 3 || m2.size() != 3) throw std::invalid_argument("Cross product only possible for 3D vectors");
+    if(!m1.is_vector() || !m2.is_vector() || m1.size() != 3 || m2.size() != 3) throw std::invalid_argument("Cross product only possible for 3D vectors");
 
     std::vector<long double> result(3);
     std::vector<long double> a = m1.rows() == 1 ? m1.data[0] : m1.T().data[0];
