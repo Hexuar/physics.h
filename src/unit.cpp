@@ -2,8 +2,8 @@
 #include "superscript.h"
 
 
-inline std::string si_strings[7] = {"m","kg","s","A","K","cd","mol"};
-inline std::map<physics::unit, std::string> si_special_names {
+inline const std::string si_strings[7] = {"m","kg","s","A","K","cd","mol"};
+inline const std::map<physics::unit, std::string> si_derved_names {
     { physics::HZ, "Hz" },
     { physics::N, "N" },
     { physics::J, "J" },
@@ -18,6 +18,19 @@ inline std::map<physics::unit, std::string> si_special_names {
     { physics::WB, "Wb" },
     { physics::T, "T" }
 };
+inline const std::map<physics::unit, std::string> si_special_names {
+    { physics::J * physics::S, "Js" },
+    { physics::N * physics::S, "Ns" },
+    { physics::J / physics::K, "JK" + super::super(-1) },
+    { physics::J / (physics::KG * physics::K), "Jkg" + super::super(-1) + "K" + super::super(-1) },
+    { physics::C / physics::M, "Cm" + super::super(-1) },
+    { physics::C / (physics::M^2), "Cm" + super::super(-2) },
+    { physics::C / (physics::M^3), "Cm" + super::super(-3) },
+    { physics::T * physics::M, "Tm" },
+    { physics::A / (physics::V * physics::M), "AV" + super::super(-1) + "m" + super::super(-1) },
+    { physics::V / physics::M, "Vm" + super::super(-1) },
+    { physics::W / (physics::M^2), "Wm" + super::super(-2) }
+};
 
 inline physics::unit::unit(std::vector<int8_t> si_units) {
     int size = si_units.size();
@@ -27,13 +40,21 @@ inline physics::unit::unit(std::vector<int8_t> si_units) {
 }
 
 inline physics::unit::operator std::string() const {
-    // Returns special character if present in map
-    std::string output = si_special_names[*this];
-    if(output != "") {
+    std::string output;
+
+    // Returns special names if present in map
+    if(si_special_names.count(*this) != 0) {
+        output = si_special_names.at(*this);
         return output;
     }
 
-    // Appends all units to output string
+    // Returns name of derived unit if present in map
+    if(si_derved_names.count(*this) != 0) {
+        output = si_derved_names.at(*this);
+        return output;
+    }
+
+    // Constructs name from base units
     for(int i = 0; i < 7; i++) {
         int8_t u = si[i];
         if(u != 0) {
