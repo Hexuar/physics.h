@@ -464,7 +464,7 @@ namespace physics {
 #include <math.h>
 
 
-inline std::map<int8_t, std::string> prefix_names {
+std::map<int8_t, std::string> prefix_names {
     {24, "Y"},
     {21, "Z"},
     {18, "E"},
@@ -652,7 +652,7 @@ inline std::string physics::val::get_prefix() const {
 
 
 namespace super {
-    inline std::map<char, std::string> supertable {
+    std::map<char, std::string> supertable {
         {'0', "\u2070"},
         {'1', "\u00b9"},
         {'2', "\u00b2"},
@@ -692,8 +692,8 @@ namespace super {
 
 
 
-inline const std::string si_strings[7] = {"m","kg","s","A","K","cd","mol"};
-inline const std::map<physics::unit, std::string> si_derved_names {
+const std::string si_strings[7] = {"m","kg","s","A","K","cd","mol"};
+const std::map<physics::unit, std::string> si_derved_names {
     { physics::HZ, "Hz" },
     { physics::N, "N" },
     { physics::J, "J" },
@@ -708,7 +708,7 @@ inline const std::map<physics::unit, std::string> si_derved_names {
     { physics::WB, "Wb" },
     { physics::T, "T" }
 };
-inline const std::map<physics::unit, std::string> si_special_names {
+const std::map<physics::unit, std::string> si_special_names {
     { physics::J * physics::S, "Js" },
     { physics::N * physics::S, "Ns" },
     { physics::J / physics::K, "JK" + super::super(-1) },
